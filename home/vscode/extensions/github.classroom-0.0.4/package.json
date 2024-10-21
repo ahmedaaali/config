@@ -1,0 +1,208 @@
+{
+	"name": "classroom",
+	"displayName": "GitHub Classroom",
+	"description": "Browse, edit and collaborate on your GitHub Classroom assignments",
+	"icon": "images/icon.png",
+	"version": "0.0.4",
+	"publisher": "github",
+	"license": "SEE LICENSE IN LICENSE",
+	"engines": {
+		"vscode": "^1.56.0"
+	},
+	"homepage": "https://classroom.github.com",
+	"bugs": {
+		"url": "https://github.com/orgs/community/discussions/categories/github-education"
+	},
+	"repository": {},
+	"categories": [
+		"Education"
+	],
+	"keywords": [
+		"classroom",
+		"student",
+		"github"
+	],
+	"aiKey": "AIF-d9b70cd4-b9f9-4d70-929b-a071c400b217",
+	"activationEvents": [
+		"workspaceContains:**/github-classroom/**",
+		"onUri",
+		"onStartupFinished",
+		"onView:github-pull-requests"
+	],
+	"main": "./extension-node.js",
+	"browser": "./extension-browser.js",
+	"extensionKind": [
+		"workspace",
+		"web"
+	],
+	"extensionPack": [
+		"github.vscode-pull-request-github",
+		"ms-vsliveshare.vsliveshare"
+	],
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": true
+		}
+	},
+	"preview": true,
+	"contributes": {
+		"commands": [
+			{
+				"command": "github.classroom.getAccessToken",
+				"title": "Get Access Token",
+				"category": "GitHub Classroom",
+				"enablement": "classroom:command-enabled:getAccessToken"
+			},
+			{
+				"command": "github.classroom.openAssignment",
+				"title": "Open Assignment",
+				"category": "GitHub Classroom",
+				"icon": "$(folder-opened)",
+				"enablement": "classroom:command-enabled:openAssignment"
+			},
+			{
+				"command": "github.classroom.refresh",
+				"title": "Refresh",
+				"category": "GitHub Classroom",
+				"icon": "$(refresh)",
+				"enablement": "classroom:command-enabled:refresh"
+			},
+			{
+				"command": "github.classroom.signIn",
+				"title": "Sign In",
+				"category": "GitHub Classroom",
+				"enablement": "classroom:command-enabled:signIn"
+			},
+			{
+				"command": "github.classroom.liveshareInvite",
+				"title": "Invite",
+				"category": "GitHub Classroom",
+				"icon": "$(live-share)",
+				"enablement": "classroom:command-enabled:liveshareInvite"
+			},
+			{
+				"command": "github.classroom.syncChanges",
+				"title": "Sync Changes",
+				"category": "GitHub Classroom",
+				"icon": "$(sync)",
+				"enablement": "classroom:command-enabled:syncChanges"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "github-pull-requests",
+					"title": "GitHub",
+					"icon": "$(github)"
+				}
+			]
+		},
+		"views": {
+			"explorer": [
+				{
+					"id": "github.classroom.activeAssignment",
+					"name": "Assignment",
+					"when": "classroom:active-assignment-is-open"
+				}
+			],
+			"github-pull-requests": [
+				{
+					"id": "github.classroom.assignmentExplorer",
+					"name": "Classrooms"
+				}
+			]
+		},
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "github.classroom.liveshareInvite",
+					"when": "false"
+				}
+			],
+			"view/title": [
+				{
+					"command": "github.classroom.refresh",
+					"group": "navigation",
+					"when": "classroom:command-enabled:refresh && view == github.classroom.assignmentExplorer"
+				},
+				{
+					"command": "github.classroom.refresh",
+					"group": "navigation",
+					"when": "classroom:command-enabled:refresh && view == github.classroom.activeAssignment"
+				},
+				{
+					"command": "github.classroom.syncChanges",
+					"group": "navigation",
+					"when": "classroom:command-enabled:syncChanges && view == github.classroom.activeAssignment"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "github.classroom.openAssignment",
+					"group": "inline",
+					"when": "classroom:command-enabled:openAssignment && view == github.classroom.assignmentExplorer && viewItem =~ /openAssignmentEnabled/"
+				},
+				{
+					"command": "github.classroom.syncChanges",
+					"group": "inline",
+					"when": "classroom:command-enabled:syncChanges && view == github.classroom.assignmentExplorer && viewItem =~ /syncChangesEnabled/"
+				},
+				{
+					"command": "github.classroom.liveshareInvite",
+					"group": "inline",
+					"when": "classroom:command-enabled:liveshareInvite && view == github.classroom.activeAssignment && viewItem =~ /liveshareInviteEnabled/"
+				},
+				{
+					"command": "github.classroom.openAssignment",
+					"group": "navigation",
+					"when": "classroom:command-enabled:openAssignment && view == github.classroom.assignmentExplorer && viewItem =~ /openAssignmentEnabled/"
+				},
+				{
+					"command": "github.classroom.syncChanges",
+					"group": "navigation",
+					"when": "classroom:command-enabled:syncChanges && view == github.classroom.assignmentExplorer && viewItem =~ /syncChangesEnabled/"
+				},
+				{
+					"command": "github.classroom.liveshareInvite",
+					"group": "navigation",
+					"when": "classroom:command-enabled:liveshareInvite && view == github.classroom.activeAssignment && viewItem =~ /liveshareInviteEnabled/"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "github.classroom.activeAssignment",
+				"contents": "Manage your classroom assignments, by signing in with a GitHub account.\n\n[$(github) Sign In](command:github.classroom.signIn)",
+				"when": "classroom:is-logged-out"
+			},
+			{
+				"view": "github.classroom.assignmentExplorer",
+				"contents": "Loading...",
+				"when": "!classroom:is-initialized"
+			},
+			{
+				"view": "github.classroom.assignmentExplorer",
+				"contents": "Manage your classroom assignments, by signing in with a GitHub account.\n\n[$(github) Sign In](command:github.classroom.signIn)",
+				"when": "classroom:is-logged-out"
+			},
+			{
+				"view": "github.classroom.assignmentExplorer",
+				"contents": "You have not accepted any assignments. Accept an assignment sent to you via email or ask your instructor for a link.",
+				"when": "classroom:has-no-assignments && !classroom:is-logged-out"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "361ae0c6-16e3-496c-96d2-4899f945d7bc",
+		"publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+		"publisherDisplayName": "GitHub",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1727875189667,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery"
+	}
+}

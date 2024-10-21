@@ -1,0 +1,48 @@
+[submodule "tmux/plugins/tmux-continuum"]
+	path = tmux/plugins/tmux-continuum
+	url = https://github.com/zsh-users/tmux-continuum.git
+	branch = main
+[submodule "tmux/plugins/tmux-fzf-url"]
+	path = tmux/plugins/tmux-fzf-url
+	url = https://github.com/zsh-users/tmux-fzf-url.git
+	branch = main
+[submodule "tmux/plugins/tmux-fzf"]
+	path = tmux/plugins/tmux-fzf
+	url = https://github.com/zsh-users/tmux-fzf.git
+	branch = main
+[submodule "tmux/plugins/tmux-resurrect"]
+	path = tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect.git
+	branch = main
+[submodule "tmux/plugins/tmux-sensible"]
+	path = tmux/plugins/tmux-sensible
+	url = https://github.com/tmux-plugins/tmux-sensible.git
+	branch = main
+[submodule "tmux/plugins/tmux-themepack"]
+	path = tmux/plugins/tmux-themepack
+	url = https://github.com/tmux-plugins/tmux-themepack.git
+	branch = main
+[submodule "tmux/plugins/tmux-thumbs"]
+	path = tmux/plugins/tmux-thumbs
+	url = https://github.com/tmux-plugins/tmux-thumbs.git
+	branch = main
+[submodule "tmux/plugins/tmux-yank"]
+	path = tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank.git
+	branch = main
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm.git
+	branch = main
+[submodule "tmux/plugins/vim-tmux-navigator"]
+	path = tmux/plugins/vim-tmux-navigator
+	url = https://github.com/benmills/vim-tmux-navigator.git
+	branch = main
+[submodule "home/oh-my-zsh"]
+	path = home/oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
+	branch = master
+[submodule "home/fzf-git.sh"]
+	path = home/fzf-git.sh
+	url = https://github.com/junegunn/fzf-git.sh.git
+	branch = main

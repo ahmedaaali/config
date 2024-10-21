@@ -1,0 +1,18 @@
+0 verbose cli /usr/local/Cellar/node/22.9.0_1/bin/node /usr/local/bin/npm
+1 info using npm@10.8.3
+2 info using node@v22.9.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/ahmedaaali/projects/config/nvim/.npmrc
+5 silly config load:file:/Users/ahmedaaali/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm version
+8 verbose argv "version" "--json"
+9 verbose logfile logs-max:10 dir:/Users/ahmedaaali/.npm/_logs/2024-10-08T21_16_22_575Z-
+10 verbose logfile /Users/ahmedaaali/.npm/_logs/2024-10-08T21_16_22_575Z-debug-0.log
+11 silly logfile start cleaning logs, removing 2 files
+12 verbose cwd /Users/ahmedaaali/projects/config/nvim
+13 verbose os Darwin 22.6.0
+14 verbose node v22.9.0
+15 verbose npm  v10.8.3
+16 verbose exit 0
+17 info ok
