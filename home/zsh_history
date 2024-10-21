@@ -1,0 +1,344 @@
+: 1724768023:0;git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k\
+
+: 1724768071:0;ls
+: 1724768074:0;ls -la
+: 1724768091:0;vim .zshrc
+: 1724768156:0;vim .zprofile
+: 1724768172:0;echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/[username]/.zprofile\
+
+: 1724768183:0;echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/ahmedaaali/.zprofile\
+
+: 1724768188:0;eval "$(/opt/homebrew/bin/brew shellenv)"\
+
+: 1724768206:0;eval "$(/usr/local/bin/brew shellenv)"
+: 1724768245:0;(echo; echo 'eval "$(/usr/local/bin/brew shellenv)"') >> /Users/ahmedaaali/.zprofile
+: 1724768247:0;eval "$(/usr/local/bin/brew shellenv)"
+: 1724768251:0;vim .zprofile
+: 1724768440:0;la
+: 1724768440:0;pwd
+: 1724768440:0;ls -la
+: 1724768440:0;ls
+: 1724768440:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1724768440:0;    (echo; echo 'eval "$(/usr/local/bin/brew shellenv)"') >> /Users/ahmedaaali/.zprofile
+: 1724768440:0;eval "$(/usr/local/bin/brew shellenv)"
+: 1724768440:0;ls
+: 1724768440:0;brew install git\
+
+: 1724768440:0;sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+: 1724768440:0;rm -r /Users/ahmedaaali/.oh-my-zsh
+: 1724768440:0;sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+: 1724768452:0;la
+: 1724768460:0;cat .zshrc
+: 1724768480:0;brew install eza
+: 1724768567:0;la
+: 1724770802:0;ll
+: 1724770826:0;v
+: 1724770884:0;source ~/.zshrc
+: 1724770912:0;brew install thefuck fzf zoxide zsh-autosuggestions zsh-syntax-highlighting
+: 1724771043:0;source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+: 1724771053:0;source ~/.zshrc
+: 1724771078:0;source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+: 1724771083:0;source ~/.zshrc
+: 1724771102:0;vim .zshrc
+: 1724771130:0;c
+: 1724771429:0;defaults write com.apple.finder
+: 1724771437:0;CreateDesktop false; killall Finder
+: 1724771469:0;CreateDesktop false; killall Finder CreateDesktop false; killall Finder
+: 1724771569:0;CreateDesktop false; killall Finder
+: 1724771727:0;defaults write com.apple.finder chflags hidden /Users/username/Desktop/*
+: 1724771740:0;defaults write com.apple.finder CreateDesktop false; killall Finder
+: 1726010536:0;ifconfic
+: 1726010538:0;ifconfig
+: 1726010586:0;ping 192.168.0.1
+: 1726589404:0;brew install git
+: 1726589438:0;git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+: 1726589493:0;cd /Users/ahmedaaali/.oh-my-zsh/custom/themes/powerlevel10k
+: 1726589495:0;la
+: 1726589509:0;rm -rf
+: 1726589511:0;la
+: 1726589518:0;..
+: 1726589521:0;la
+: 1726589530:0;..
+: 1726589541:0;cd ~
+: 1726589543:0;la
+: 1726589551:0;ZSH_THEME="powerlevel10k/powerlevel10k"
+: 1726589556:0;source ~/.zshrc
+: 1726589567:0;v .zshrc
+: 1726589574:0;vim .zshrc
+: 1726589712:0;p10kconfigure
+: 1726589724:0;p10k configure
+: 1726590300:0;la
+: 1726590304:0;c
+: 1726590314:0;cd Downloads
+: 1726590318:0;~
+: 1726590350:0;curl https://raw.githubusercontent.com/josean-dev/dev-environment-files/main/coolnight.itermcolors --output ~/Downloads/coolnight.itermcolors
+: 1726590601:0;git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+: 1726590608:0;git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+: 1726590617:0;source ~/.zshrc
+: 1726590623:0;sz
+: 1726590661:0;c
+: 1726590682:0;la
+: 1726590690:0;la .config
+: 1726590714:0;v .config/all_commands
+: 1726590723:0;vim .config/all_commands
+: 1726591203:0;brew tap homebrew/cask-fonts
+: 1726591224:0;brew install neovim
+: 1726591235:0;v .config/all_commands
+: 1726591242:0;vim .config/all_commands
+: 1726591273:0;brew install node
+: 1726591305:0;brew install ripgrep
+: 1726591313:0;v
+: 1726591360:0;v .config/all_commands
+: 1726591407:0;cd .config
+: 1726591409:0;v all_commands
+: 1726591530:0;brew install jesseduffield/lazygit/lazygit
+: 1726591702:0;v all_commands
+: 1726591732:0;v
+: 1726591759:0;brew install tmux
+: 1726591898:0;la
+: 1726592048:0;la .tmux
+: 1726592077:0;la .config/tmux/.tmux/
+: 1726592087:0;la .config/tmux/.tmux/plugins/
+: 1726592119:0;tl
+: 1726592124:0;tmux
+: 1726592139:0;tn hala
+: 1726592146:0;a tn
+: 1726592166:0;a tt
+: 1726592169:0;tl
+: 1726592176:0;tn hala
+: 1726592379:0;tl
+: 1726593564:0;tmux
+: 1726593587:0;la .tmux
+: 1726593595:0;la .config/tmux
+: 1726593612:0;v .config/tmux/tmux.conf
+: 1726593646:0;v .config/tmux/.tmux/plugins
+: 1726593679:0;v .config/tmux/plugins
+: 1726593688:0;c
+: 1726593817:0;vz
+: 1726593831:0;st
+: 1726593840:0;tmux
+: 1726593844:0;st
+: 1726593880:0;c
+: 1726593893:0;tmux source-file ~/.tmux.conf\
+
+: 1726593909:0;a st
+: 1726593928:0;tmux source-file ~/.config/tmux/tmux.conf\
+
+: 1726593940:0;tmux
+: 1726594034:0;git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+: 1726594101:0;rm -rf .config/tmux/plugins/tpm
+: 1726594112:0;git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+: 1726594116:0;tmux
+: 1726594124:0;c
+: 1726594139:0;tn hala
+: 1726594252:0;chmod +x ~/.config/tmux/plugins/tpm
+: 1726594257:0;tmux
+: 1726594303:0;brew upgrade tmux\
+
+: 1726594423:0;tmux
+: 1726594627:0;touch ~/.tmux.conf
+: 1726594632:0;v .tmux.conf
+: 1726594701:0;a tn
+: 1726594719:0;tn hala
+: 1726594770:0;tmux new -s Session
+: 1726594785:0;tmux -V
+: 1726594870:0;v .tmux.conf
+: 1726595248:0;brew reinstall tmux
+: 1726595286:0;tmux
+: 1726595299:0;tmux new -s Session
+: 1726595361:0;st
+: 1726595430:0;tmux
+: 1726595441:0;st
+: 1726595461:0;rm -rf .config/tmux/plugins/tpm
+: 1726595471:0;la .config/tmux/plugins/tmux-
+: 1726595473:0;la .config/tmux/plugins/
+: 1726595477:0;st
+: 1726595488:0;tmux
+: 1726595490:0;st
+: 1726595553:0;touch ~/.tmux.conf
+: 1726595561:0;v .tmux.conf
+: 1726595618:0;git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+: 1726595622:0;la .tmux
+: 1726595640:0;tmux
+: 1726595665:0;tl
+: 1726595796:0;la .config/tmux
+: 1726595801:0;t
+: 1726595818:0;cd .config/tmux
+: 1726595820:0;t 3
+: 1726595824:0;c
+: 1726595826:0;t 2
+: 1726595844:0;ta 2
+: 1726595847:0;a t
+: 1726595856:0;alias t
+: 1726595864:0;vz
+: 1726595911:0;cd .tmux
+: 1726595914:0;t 2
+: 1726596032:0;~
+: 1726596034:0;vz
+: 1726596074:0;ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf\
+
+: 1726596077:0;tmux
+: 1726596096:0;tl
+: 1726596286:0;tt
+: 1726596290:0;vt
+: 1726596853:0;c
+: 1726596855:0;la
+: 1726596860:0;la .tmux.conf
+: 1726596868:0;rm .tmux.conf
+: 1726596904:0;la .tmux
+: 1726596969:0;ln -s ~/.config/tmux/.tmux ~/.tmux
+: 1726596985:0;la .tmux
+: 1726597023:0;tmux
+: 1726597062:0;la .config/tmux/
+: 1726597074:0;la .config/tmux/.tmux/
+: 1726597265:0;ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf\
+
+: 1726597267:0;tmux
+: 1726597275:0;la .tmux
+: 1726597281:0;la .tmu
+: 1726597286:0;la .tmu*
+: 1726597444:0;vt
+: 1726597478:0;a st
+: 1726597494:0;rm .tmux.conf
+: 1726597496:0;la
+: 1726597499:0;la .tmux
+: 1726597501:0;c
+: 1726597504:0;st
+: 1726597509:0;tmux
+: 1726597514:0;tl
+: 1726597519:0;tt 6
+: 1726597528:0;tl
+: 1726597532:0;tn hala
+: 1726597539:0;tl
+: 1726597551:0;tt 7
+: 1726597564:0;st
+: 1726597572:0;a tn
+: 1726597606:0;tmux -f ~/.config/tmux/tmux.conf 
+: 1726597623:0;vt
+: 1726597725:0;st
+: 1726597729:0;tmux
+: 1726597740:0;vt
+: 1726597856:0;la .tmux/plugins/tpm/tpm
+: 1726597877:0;tmux -f ~/.config/tmux/tmux.conf\
+
+: 1726598119:0;mv tmux.conf .tmux.conf
+: 1726598137:0;vt
+: 1726598175:0;brew install reattach-to-user-namespace\
+
+: 1726598191:0;tmux
+: 1726598228:0;v .config/all_commands
+: 1726598332:0;tmux
+: 1726598336:0;tl
+: 1726598346:0;tt 13
+: 1726598355:0;tl
+: 1726598435:0;ls /usr/local/Cellar | grep tmux\
+
+: 1726598450:0;rm -rf /usr/local/Cellar/tmux\
+
+: 1726598465:0;brew uninstall tmux\
+
+: 1726598483:0;brew install tmux
+: 1726598619:0;brew cleanup
+: 1726598660:0;brew install tmux
+: 1726598756:0;brew install eza fzf openssl@3 python@3.12 zoxide zsh-autosuggestions\
+
+: 1726598801:0;tn hala
+: 1726598813:0;tl
+: 1726599058:0;brew install fzf fd bat git-delta tlrc thefuck zoxide
+: 1726599092:0;brew install eza
+: 1726599131:0;tldr eza
+: 1726599419:0;brew install tetris toilet asciiquarium cmatrix
+: 1726599472:0;sudo v /etc/pam.d/sudo
+: 1726599483:0;sudo nvim /etc/pam.d/sudo
+: 1726599573:0;v .config/all_commands
+: 1726599603:0;vz
+: 1726599613:0;brew install toilet asciiquarium cmatrix
+: 1726599637:0;sz
+: 1726599681:0;brew install tetris
+: 1726599695:0;brew install vitetris
+: 1726599715:0;man vitetris
+: 1726599718:0;vitetris
+: 1726599751:0;HOMEBREW_NO_ENV_HINTS
+: 1726599804:0;brew uninstall vitetris
+: 1726599813:0;brew install not-tetris
+: 1726599828:0;cmatrix
+: 1726599837:0;asquiaquarium
+: 1726599893:0;asquiiuarium
+: 1726599910:0;asquiiquarium
+: 1726599919:0;asciiquarium
+: 1726599936:0;vz
+: 1726600155:0;sz
+: 1726600160:0;c
+: 1726600167:0;u1
+: 1726600170:0;u2
+: 1726600175:0;u2 hala
+: 1726600178:0;u3
+: 1726600183:0;c
+: 1726600195:0;tl
+: 1726600199:0;tt hala
+: 1726600204:0;tl
+: 1726600207:0;tt config
+: 1726600240:0;c
+: 1726625554:0;echo $0
+: 1726625677:0;mv .config/all_commands .config/setup_commands
+: 1726625812:0;v .config/setup_commands
+: 1726677430:0;lazygit --version
+: 1726677436:0;lazygit -V
+: 1726677447:0;lazygit -v
+: 1726677469:0;c
+: 1726764824:0;cd .config
+: 1726764828:0;a gc
+: 1726764830:0;a gp
+: 1726764834:0;a gpl
+: 1726764863:0;gpl https://github.com/josean-dev/dev-environment-files/.config/aerospace.git
+: 1726765240:0;mkdir -p ~/.config/aerospace
+: 1726765245:0;la
+: 1726765279:0;mv ~/Downloads/aerospace.toml aerospace
+: 1727365823:0;n
+: 1727365826:0;v
+: 1727365899:0;c
+: 1727365913:0;vz
+: 1727367164:0;wget  --help
+: 1727367170:0;curl --help
+: 1727649692:0;brew install pip
+: 1727649731:0;brew install python3
+: 1727649744:0;brew install pip3
+: 1727649800:0;python3 -m pip --version\
+
+: 1727649820:0;python3 -m pip install PyPDF2\
+
+: 1727902488:0;brew install --cask wezterm
+: 1727902602:0;brew install font-meslo-lg-nerd-font
+: 1727904744:0;cd /Users/ahmedaaali/Library/CloudStorage/OneDrive-CarletonUniversity/4th\ Year\ CompSysEng/Fall24/SYSC3600/OLD/Sysc\ 3600
+: 1727904760:0;cd /Users/ahmedaaali/Library/CloudStorage/OneDrive-CarletonUniversity/4th\ Year\ CompSysEng/Fall24/SYSC3600/OLD/
+: 1727904763:0;ls
+: 1727904766:0;cd Sysc\ 3600\ Notes
+: 1727904773:0;grp rlc
+: 1727971207:0;~
+: 1727971211:0;a ~
+: 1727971238:0;brew install font-meslo-lg-nerd-font
+: 1727971261:0;brew install --cask wezterm
+: 1727971326:0;v ~/.wezterm.lua
+: 1727971556:0;a cd
+: 1727971909:0;v ~/.wezterm.lua
+: 1727972054:0;v .config/nvim/lua/ahmed/plugins/colorscheme.lua
+: 1727972290:0;vz
+: 1727972377:0;cat -v
+: 1727972424:0;vz
+: 1727972706:0;sz
+ln -s ~/projects/config/home/gitconfig ~/.gitconfig\
+ln -s ~/projects/config/home/local ~/.local\
+ln -s ~/projects/config/home/npm ~/.npm\
+ln -s ~/projects/config/home/oh-my-zsh ~/.oh-my-zsh\
+ln -s ~/projects/config/home/p10k.zsh ~/.p10k.zsh\
+ln -s ~/projects/config/home/screenrc ~/.screenrc\
+ln -s ~/projects/config/home/viminfo ~/.viminfo\
+ln -s ~/projects/config/home/vscode ~/.vscode\
+ln -s ~/projects/config/home/wezterm.lua ~/.wezterm.lua\
+ln -s ~/projects/config/home/zhistory ~/.zhistory\
+ln -s ~/projects/config/home/zprofile ~/.zprofile\
+ln -s ~/projects/config/home/zsh_history ~/.zsh_history\
+ln -s ~/projects/config/home/zsh_sessions ~/.zsh_sessions\
+ln -s ~/projects/config/home/zshrc ~/.zshrc\
+ln -s ~/projects/config/home/zshrc.pre-oh-my-zsh ~/.zshrc.pre-oh-my-zsh\
+

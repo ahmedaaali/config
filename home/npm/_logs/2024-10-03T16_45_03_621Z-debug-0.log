@@ -1,0 +1,33 @@
+0 verbose cli /usr/local/Cellar/node/22.8.0/bin/node /usr/local/bin/npm
+1 info using npm@10.8.2
+2 info using node@v22.8.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/ahmedaaali/.local/share/nvim/mason/staging/prettier/.npmrc
+5 silly config load:file:/Users/ahmedaaali/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm install prettier@3.3.3
+8 verbose argv "install" "prettier@3.3.3"
+9 verbose logfile logs-max:10 dir:/Users/ahmedaaali/.npm/_logs/2024-10-03T16_45_03_621Z-
+10 verbose logfile /Users/ahmedaaali/.npm/_logs/2024-10-03T16_45_03_621Z-debug-0.log
+11 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+12 silly logfile start cleaning logs, removing 4 files
+13 silly logfile done cleaning log files
+14 silly idealTree buildDeps
+15 silly fetch manifest prettier@3.3.3
+16 silly packumentCache full:https://registry.npmjs.org/prettier cache-miss
+17 http fetch GET 200 https://registry.npmjs.org/prettier 318ms (cache updated)
+18 silly packumentCache full:https://registry.npmjs.org/prettier set size:undefined disposed:false
+19 silly placeDep ROOT prettier@3.3.3 OK for: @mason/prettier@1.0.0 want: 3.3.3
+20 silly reify moves {}
+21 silly audit bulk request { prettier: [ '3.3.3' ] }
+22 silly tarball no local data for prettier@https://registry.npmjs.org/prettier/-/prettier-3.3.3.tgz. Extracting by manifest.
+23 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 115ms
+24 silly audit report {}
+25 http fetch GET 200 https://registry.npmjs.org/prettier/-/prettier-3.3.3.tgz 714ms (cache miss)
+26 silly ADD node_modules/prettier
+27 verbose cwd /Users/ahmedaaali/.local/share/nvim/mason/staging/prettier
+28 verbose os Darwin 22.6.0
+29 verbose node v22.8.0
+30 verbose npm  v10.8.2
+31 verbose exit 0
+32 info ok

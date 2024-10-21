@@ -1,0 +1,1 @@
+/Users/ahmedaaali/projects/config/tmux/.tmux

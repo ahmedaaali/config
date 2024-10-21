@@ -1,0 +1,84 @@
+Certainly! Here's how you can set up your script to run at boot using systemd:
+
+1. **Create the Script**:
+   First, create your script `clipboard_startup.sh` in the desired location, such as `/usr/local/bin/clipboard_startup.sh`. Make sure it's executable:
+
+   ```bash
+   sudo nvim /usr/local/bin/clipboard_startup.sh
+   ```
+
+   Add the content to your script:
+
+   ```bash
+    #!/bin/bash
+    
+    # Install virtualbox-guest-x11 if not already installed
+    if ! dpkg -s virtualbox-guest-x11 &> /dev/null; then
+        sudo apt update
+        sudo apt install -y virtualbox-guest-x11
+    fi
+    
+    # Restart VBoxClient for clipboard functionality
+    pkill 'VBoxClient --clipboard' -f
+    sleep 1
+    VBoxClient --clipboard
+   ```
+
+   Save the file and exit the text editor. Make the script executable:
+
+   ```bash
+   sudo chmod +x /usr/local/bin/clipboard_startup.sh
+   ```
+
+2. **Create a systemd Service Unit File**:
+   Create a systemd service unit file, typically in the `/etc/systemd/system` directory. Let's name it `clipboard_startup.service`:
+
+   ```bash
+   sudo nvim /etc/systemd/system/clipboard_startup.service
+   ```
+
+   Add the following content to the file:
+
+   ```plaintext
+   [Unit]
+   Description=Start VirtualBox Clipboard at boot
+
+   [Service]
+   ExecStart=/usr/local/bin/clipboard_startup.sh
+   Type=oneshot
+   RemainAfterExit=yes
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+   Save the file and exit the text editor.
+
+3. **Reload systemd Manager Configuration**:
+   After creating the service unit file, reload the systemd manager configuration to apply the changes:
+
+   ```bash
+   sudo systemctl daemon-reload
+   ```
+
+4. **Enable the Service**:
+   Enable the service to start automatically at boot:
+
+   ```bash
+   sudo systemctl enable clipboard_startup.service
+   ```
+
+5. **Start the Service**:
+   You can start the service manually for the current session:
+
+   ```bash
+   sudo systemctl start clipboard_startup.service
+   ```
+
+   Or you can reboot your system to automatically start the service at boot:
+
+   ```bash
+   sudo reboot
+   ```
+
+Now, your script should run at boot time using systemd. This approach provides better control and flexibility compared to traditional methods like `rc.local`. If you encounter any issues or need further assistance, feel free to ask!
