@@ -1,0 +1,4 @@
+#objdump commands:
+arm-none-eabi-objdump -h build/boot.elf
+arm-none-eabi-objdump -d build/boot.elf > temp.asm
+arm-none-eabi-gcc -E build/boot.elf -o temp.i
