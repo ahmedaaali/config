@@ -48,7 +48,7 @@ keymap.set("x", "<leader>d0", '"_d0', { desc = "Delete to start of line without 
 keymap.set("x", "<leader>D", '"_D', { desc = "Delete without yanking" })
 keymap.set("x", "<leader>c", '"_c', { desc = "Change without yanking" })
 keymap.set("x", "<leader>C", '"_C', { desc = "Change without yanking" })
-keymap.set("x", "jk", "<Esc>", { desc = "Exit visual mode" })
+keymap.set("x", "q", "<Esc>", { desc = "Exit visual mode" })
 
 -- Insert mode mappings
 -- keymap.set("i", "<C-c>", "<Esc>", { desc = "Escape with Ctrl+C" })

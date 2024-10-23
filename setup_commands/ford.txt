@@ -1,0 +1,167 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cd netn_boot/s32g_boot/fbl/
+time S32G3_SRAM_SIZE=15MB make -f board/netn/a53/makefile
+time S32G3_SRAM_SIZE=15MB make -f board/netn/a53/makefile clean
+
+fastboot -s tcp:10.1.0.1:9123 flash bootloader C:\Users\aali112\Downloads\NETN_WRLinux_Bundle_Debug-1.0.0.799\out\target\product\bootloader\insecure\bootloader_upgrade.bin.dev_signed
+fastboot -s tcp:10.1.0.1:9123 flash bootloader C:\Users\aali112\Documents\virtual_box\out\bootloader\bootloader_upgrade.bin.dev_signed
+
+fastboot -s tcp:10.1.0.1:9123 flash netloader dvs-boot-18.img
+fastboot -s tcp:10.1.0.1:9123 flash netloader dvs-boot.img
+fastboot -s tcp:10.1.0.1:9123 reboot
+
+cat /proc/bmsg
+
+ls -la /dev/disk/by-partlabel/
+#mmcblk0p9 (boot_a), mmcblk0p10 (system_a)
+
+hexdump -Cv -n 1024 /dev/mmcblk0p10
+dd if=/dev/mmcblk0p10 of=/data/test1024.bin bs=1024 count=1 skip=0 seek=0
+hexdump -Cv -n 1024 /data/test1024.bin
+hexdump -Cv -n 1024 /dev/mmcblk0p10
+#change first 4 of test file to 1234
+vim /data/test1024.bin
+hexdump -Cv -n 1024 /data/test1024.bin
+dd if=/data/test1024.bin of=/dev/mmcblk0p10 bs=1024 count=1 skip=0 seek=0
+hexdump -Cv -n 1024 /dev/mmcblk0p10
+
+#dd command for netloader
+dd if=/dev/disk/by-partlabel/netloader of=/data/netloader_64.bin bs=64M
+dd if=/dev/disk/by-partlabel/netloader_a of=/data/netloader_a_64.bin bs=64M
+sha265sum /data/netloader_64.bin
+sha265sum /data/netloader_a_64.bin
+dd if=/dev/disk/by-partlabel/netloader_bak of=/data/netloader_bak_64.bin bs=64M
+dd if=/dev/disk/by-partlabel/netloader_b of=/data/netloader_b_64.bin bs=64M
+sha256sum /data/netloader_bak_64.bin
+sha265sum /data/netloader_b_64.bin
+
+
+# EMMC error
+S32FlashTool -t targets\S32G3xxx.bin -a targets\EMMC.bin -dcd targets\ASIL_B_watchdog_disable_dcd.bin -fid -i uart -p COM21
+
+S32FlashTool -t targets\S32G3xxx.bin -a targets\EMMC.bin -dcd targets\ASIL_B_watchdog_disable_dcd.bin  -fread -addr 0x0 -size 0x4000000 -f emmc-64MB-20240214.bin -b -i uart -p COM21
+
+S32FlashTool -t targets\S32G3xxx.bin -a targets\EMMC.bin -dcd targets\ASIL_B_watchdog_disable_dcd.bin  -fprogram -addr 0x0 -f 16GB_gpt_v0.bin -b -i uart -p COM21
+
+
+# install driver
+scp -i c:\docs\ahmed\SYNC4-Dev devnp-bcm89586.so root@10.1.0.3:/var/pcie
+slay io-pkt-v6-hc
+mount -uw /mnt
+cp /var/pcie/devnp-bcm89586.so /mnt/lib64/dll
+reset or power cycle
+
+# monitor scripts
+scp -i c:\docs\ahmed\SYNC4-Dev monitor_nicinfo.sh root@10.1.0.3:/var/pcie/
+scp -i c:\docs\ahmed\SYNC4-Dev monitor_reg_date.sh root@10.1.0.3:/var/pcie/
+chmod 777 /var/pcie/monitor_nicinfo.sh
+chmod 777 /var/pcie/monitor_reg_date.sh
+scp -i c:\docs\ahmed\SYNC4-Dev qc-cpu-ddr-bw-load-test root@10.1.0.3:/var/pcie
+
+# start in windows monitoring script
+# stress testing using iperf3, before running below commands, check the disk space df -h
+iperf3 -V -B 10.1.0.1 -s &
+iperf3 -V -c 10.1.0.1 -f M -t 50000 -b 1000M > /dev/null 2>&1 &
+on -p 9 -d ./var/pcie/qc-cpu-ddr-bw-load-test -n3 
+/var/pcie/monitor_nicinfo.sh &
+/var/pcie/monitor_reg_date.sh &
+
+
+# for collecting logs
+scp -i c:\docs\ahmed\SYNC4-Dev root@10.1.0.3:/var/pcie/reg_output.txt .
+scp -i c:\docs\ahmed\SYNC4-Dev root@10.1.0.3:/var/pcie/nicinfo_output.txt .
+
+scp -i C:\Users\aali112\id_ecg_ecdsa root@10.1.0.1:test_new_pink_mtd8_524288.bin .
+
+fastboot.exe -s tcp:10.1.0.1:9123 oem info
+
+# check driver version:
+use -i /mnt/lib64/dll/devnp-bcm89586.so
+
+
+# manually flash the switch go to C:\work\netn_switch\flash-with-rpc\
+python SwitchNetloaderFlasher.py fastboot.exe C:\Users\aali112\Downloads\NETN_WRLinux_Bundle_Debug-1.0.0.758\out\target\product\scorpio3_switch\bcm89587m\dv\evk_avb_switch_rev2.img.dev_signed C:\Users\aali112\Downloads\NETN_WRLinux_Bundle_Debug-1.0.0.758\out\target\product\scorpio3_switch\bcm89587m\dv\evk_avb_switch_rev2_flash.bin.dev_signed
+
+
+echo 0 > /data/sleep_override
+sync
+
+top
+cat /proc/cpuinfo
+
+git log --oneline --graph --decorate --all
+
+#pink and blue:
+mtd_debug read /dev/mtd8 0 524288 test_pink_mtd8_524288.bin
+mtd_debug read /dev/mtd9 0 524288 test_pink_mtd9_524288.bin
+mtd_debug read /dev/mtd8 0 524288 test_blue_mtd8_524288.bin
+mtd_debug read /dev/mtd8 0 524288 test_blue_mtd9_524288.bin
+
+mtd_debug read /dev/mtd8 0 524288 test_pink2_mtd8_524288.bin
+mtd_debug read /dev/mtd9 0 524288 test_pink2_mtd9_524288.bin
+mtd_debug read /dev/mtd8 0 524288 test_new_pink_mtd8_524288.bin
+mtd_debug read /dev/mtd8 0 524288 test_new_pink_mtd9_524288.bin
+
+#Insecure:
+scp -i C:\Users\aali112\id_ecg_ecdsa root@10.1.0.1:test_new_pink_mtd9_524288.bin .
+
+
+
+
+bin\S32FlashTool.exe -s -t serDL-1GV001CS.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fid
+
+bin\S32FlashTool.exe -s -t serDL-1GV001CS.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fread -addr 0 -size 0x2000000 -f .\secure_ivt_bad_0_32M.bin -b
+bin\S32FlashTool.exe -s -t serDL-1GV001CS.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fread -addr 0 -size 0x10000 -f .\secure_ivt_bad_0_64K.bin -b
+
+bin\S32FlashTool.exe -s -t serDL-1GV001CS.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fprogram -addr 0 -f ivt_sec_authed.bin
+
+#only if there's an issue:
+bin\S32FlashTool.exe -s -t serDL-1GV001CS.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fread -addr 0 -size 0x10000 -f .\secure_ivt_bad_0_64K_verify.bin -b
+
+
+#bootloader issue
+bin\S32FlashTool.exe -t targets\S32G3xxx.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fprogram -addr 0x20000 -f C:\Users\aali112\Downloads\NETN_WRLinux_Bundle_Debug-1.0.0.799\out\target\product\bootloader\insecure\fbl.bin.ivt.img.dev_signed -b
+bin\S32FlashTool.exe -t targets\S32G3xxx.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fprogram -addr 0x90000 -f C:\Users\aali112\Downloads\NETN_WRLinux_Bundle_Debug-1.0.0.799\out\target\product\bootloader\insecure\fbl.bin.ivt.img.dev_signed -b
+
+bin\S32FlashTool.exe -t targets\S32G3xxx.bin -a flash\MX25UW51245G.bin -dcd ASIL_B_watchdog_disable_dcd.bin -i uart -p COM21 -fprogram -addr 0 -f ahmed_EV2_32M.bin
+
+
+../tools/gcc-linaro-6.3.1-2017.02-x86_64_aarch64-elf/bin/aarch64-elf-objdump -d fbl.elf > fbl.lst
+
+--proxy=http://internet.ford.com:83
+
