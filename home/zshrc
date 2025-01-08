@@ -60,7 +60,6 @@ elif [[ "$OSTYPE" == "cygwin" || "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]];
   # Windows Terminal specific commands
 fi
 
-
 # history setup
 HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
