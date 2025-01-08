@@ -7,15 +7,58 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
 source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-#pyenv
-export PATH="$HOME/.pyenv/shims:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib"
-export CPPFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include"
-export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS specific commands
+  export PATH="/usr/local/opt/llvm/bin:$PATH"
+  alias make="/usr/local/bin/gmake"
+
+  #pyenv
+  export PATH="$HOME/.pyenv/shims:$PATH"
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+  export LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib"
+  export CPPFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include"
+  export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig"
+
+  #thefuck alias
+  eval $(thefuck --alias)
+  eval $(thefuck --alias fk)
+
+  #fzf
+  eval "$(fzf --zsh)"
+
+
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  if [[ -f /etc/os-release ]]; then
+    source /etc/os-release
+    if [[ "$ID" == "ubuntu" ]]; then
+      if [[ -n "$WSL_DISTRO_NAME" ]]; then
+        # WSL Ubuntu specific commands
+      else
+        # Native Ubuntu commands
+        export PATH="$HOME/.local/bin:$PATH"
+        alias make="/usr/bin/make"
+
+        #pyenv
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+
+        # fzf integration
+        source /usr/share/doc/fzf/examples/key-bindings.zsh
+        source /usr/share/doc/fzf/examples/completion.zsh
+
+      fi
+    elif [[ "$ID" == "kali" ]]; then
+      # Kali Linux specific commands
+    fi
+  fi
+elif [[ "$OSTYPE" == "cygwin" || "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+  # Windows Terminal specific commands
+fi
 
 # history setup
 HISTFILE=$HOME/.zhistory
@@ -28,9 +71,6 @@ setopt hist_verify
 # completion using arrow keys (based on history)
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
-
-#fzf
-eval "$(fzf --zsh)"
 
 #setup fzf theme
 fg="#CBE0F0"
@@ -87,10 +127,6 @@ alias lg="eza --color=always --long --icons=always --no-time --no-permissions --
 alias tr="eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions --tree"
 t() {eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions --tree --level="$1"}
 lw() {ls "$1" -1 | wc -l} 
-
-#thefuck alias
-eval $(thefuck --alias)
-eval $(thefuck --alias fk)
 
 #zoxide
 eval "$(zoxide init zsh)"
@@ -246,6 +282,4 @@ alias dx="docker exec -it"
 # export LIBRARY_PATH="/usr/local/opt/gettext/lib:$LIBRARY_PATH"
 # export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig:$PKG_CONFIG_PATH"
 # export CPATH="/usr/local/opt/gettext/include:$CPATH"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-alias make="/usr/local/bin/gmake"
 # export PATH="/usr/local/Cellar/llvm/<version>/bin:$PATH"
