@@ -13,6 +13,7 @@ ln -s /Users/ahmedaaali/projects/config/home/gitconfig ~/.gitconfig
 ln -s /Users/ahmedaaali/projects/config/home/local ~/.local
 ln -s /Users/ahmedaaali/projects/config/home/npm ~/.npm
 ln -s /Users/ahmedaaali/projects/config/home/oh-my-zsh ~/.oh-my-zsh
+ln -s /Users/ahmedaaali/projects/config/home/fzf-git.sh ~/fzf-git.sh/
 ln -s /Users/ahmedaaali/projects/config/home/p10k.zsh ~/.p10k.zsh
 ln -s /Users/ahmedaaali/projects/config/home/screenrc ~/.screenrc
 ln -s /Users/ahmedaaali/projects/config/home/viminfo ~/.viminfo
@@ -53,8 +54,6 @@ rm *Windows*
 cd ~
 rm Meslo.zip
 fc-cache -fv
-
-sudo apt install xsel xclip python3 python3-venv npm bat screen eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git neovim ripgrep tmux thefuck
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k

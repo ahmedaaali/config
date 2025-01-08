@@ -48,10 +48,29 @@ return {
 				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
 				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+				keymap.set("n", "<leader>DS", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+
+        -- opts.desc = "Hide buffer diagnostics"
+        -- keymap.set("n", "<leader>DH", function()
+        --   -- Clear diagnostics for the current buffer
+        --   vim.diagnostic.reset()
+        --   print("Diagnostics hidden")
+        -- end, opts)
+
+        opts.desc = "Enable diagnostics for buffer"
+        keymap.set("n", "<leader>DE", function()
+          vim.diagnostic.enable(0)  -- Enable diagnostics for the current buffer
+          print("Diagnostics Enabled for Buffer")
+        end, opts)
+
+        opts.desc = "Disable diagnostics for buffer"
+        keymap.set("n", "<leader>DD", function()
+          vim.diagnostic.disable(0)  -- Disable diagnostics for the current buffer
+          print("Diagnostics Disabled for Buffer")
+        end, opts)
 
 				opts.desc = "Show line diagnostics"
-				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+				keymap.set("n", "<leader>ds", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
 				opts.desc = "Go to previous diagnostic"
 				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
