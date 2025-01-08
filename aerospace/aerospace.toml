@@ -211,6 +211,16 @@ if.app-id = "com.github.wez.wezterm"
 run = "move-node-to-workspace W"
 
 [[on-window-detected]]
+if.app-id = "org.python.python"
+run = ["layout floating", "move-node-to-workspace W"]
+# run = "move-node-to-workspace W"
+
+[[on-window-detected]]
+if.app-id = "NULL-APP-BUNDLE-ID"
+run = ["layout floating", "move-node-to-workspace W"]
+# run = "move-node-to-workspace W"
+
+[[on-window-detected]]
 if.app-id = "com.google.Chrome"
 run = "move-node-to-workspace C"
 
@@ -232,12 +242,30 @@ run = "layout floating"
 
 [[on-window-detected]]
 if.app-id = "org.virtualbox.app.VirtualBox"
-run = ["layout floating", "move-node-to-workspace V"]
+# run = ["layout floating", "move-node-to-workspace V"]
+run = "move-node-to-workspace V"
 
 [[on-window-detected]]
 if.app-id = "org.virtualbox.app.VirtualBoxVM"
-run = ["layout floating", "move-node-to-workspace V"]
+# run = ["layout floating", "move-node-to-workspace V"]
+run = "move-node-to-workspace V"
 
 [[on-window-detected]]
 if.app-id = "com.vmware.fusion"
-run = ["layout floating", "move-node-to-workspace V"]
+# run = ["layout floating", "move-node-to-workspace V"]
+run = "move-node-to-workspace V"
+
+[[on-window-detected]]
+if.app-id = "com.apple.MobileSMS"
+# run = ["layout floating", "move-node-to-workspace M"]
+run = "move-node-to-workspace M"
+
+[[on-window-detected]]
+if.app-id = "net.whatsapp.WhatsApp"
+# run = ["layout floating", "move-node-to-workspace M"]
+run = "move-node-to-workspace M"
+
+[[on-window-detected]]
+if.app-id = "com.hnc.Discord"
+# run = ["layout floating", "move-node-to-workspace M"]
+run = "move-node-to-workspace M"

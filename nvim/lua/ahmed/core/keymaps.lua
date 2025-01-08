@@ -35,7 +35,8 @@ keymap.set("n", "<leader>d0", '"_d0', { desc = "Delete to start of line without 
 keymap.set("n", "<leader>D", '"_D', { desc = "Delete without yanking" })
 keymap.set("n", "<leader>c", '"_c', { desc = "Change without yanking" })
 keymap.set("n", "<leader>C", '"_C', { desc = "Change without yanking" })
-keymap.set("n", "<leader>o", "o<Esc>", { desc = "Add a new line in Normal mode" })
+keymap.set("n", "<leader>o", "o<Esc>", { desc = "Add a new line after in Normal mode" })
+keymap.set("n", "<leader>O", "O<Esc>", { desc = "Add a new line before in Normal mode" })
 keymap.set("n", "<leader>np", "o<Esc>p", { desc = "Add a new line and paste" })
 
 -- Visual mode mappings

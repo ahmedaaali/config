@@ -13,11 +13,13 @@ return {
 				c = { "clangtidy" }, --"clang-format", , "checkpatch", "cppcheck", "cpplint" },
 				make = { "checkmake" },
 			},
-			format_on_save = {
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
-			},
+			-- format_on_save = {
+			-- 	lsp_fallback = true,
+			-- 	async = false,
+			-- 	timeout_ms = 1000,
+			-- Disable format on save for specific files
+			-- exclude_filetypes = { "python", "C" },
+			-- },
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
