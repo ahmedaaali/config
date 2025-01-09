@@ -123,6 +123,7 @@ sudo apt install -y \
 curl https://pyenv.run | bash
 
 #tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
 
 #Only to setup again

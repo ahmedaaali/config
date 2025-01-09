@@ -251,6 +251,7 @@ alias gpl="git pull"
 alias grs="git restore --staged"
 alias grf="git restore"
 alias gcll="git clone"
+alias groc="git remote rename origin cloud"
 [[ -n $(alias gr 2>/dev/null) ]] && unalias gr
 gr() {git reset --soft HEAD~"$1"}
 [[ -n $(alias gcl 2>/dev/null) ]] && unalias gcl
