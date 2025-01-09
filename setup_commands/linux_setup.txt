@@ -24,7 +24,6 @@ source ~/.zshrc
 ln -s /home/ahmedaaali/projects/config/setup_commands/ /home/ahmedaaali/setup_commands
 ln -s /home/ahmedaaali/projects/config/bat /home/ahmedaaali/.config/bat
 ln -s /home/ahmedaaali/projects/config/coolnight.itermcolors /home/ahmedaaali/.config/coolnight.itermcolors
-ln -s /home/ahmedaaali/projects/config/iterm2 /home/ahmedaaali/.config/iterm2
 ln -s /home/ahmedaaali/projects/config/nvim /home/ahmedaaali/.config/nvim
 ln -s /home/ahmedaaali/projects/config/thefuck /home/ahmedaaali/.config/thefuck
 ln -s /home/ahmedaaali/projects/config/tmux/ /home/ahmedaaali/.config/tmux
@@ -49,6 +48,7 @@ ln -s /home/ahmedaaali/projects/config/home/local /home/ahmedaaali/.local
 ln -s /home/ahmedaaali/projects/config/aerospace /home/ahmedaaali/.config/aerospace
 ln -s /home/ahmedaaali/projects/config/raycast /home/ahmedaaali/.config/raycast
 ln -s /home/ahmedaaali/projects/config/wireshark /home/ahmedaaali/.config/wireshark
+ln -s /home/ahmedaaali/projects/config/iterm2 /home/ahmedaaali/.config/iterm2
 
 #wezterm
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
@@ -109,6 +109,7 @@ sudo apt install -y \
 curl https://pyenv.run | bash
 
 #tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
 
 #Only to setup again
