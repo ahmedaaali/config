@@ -1,2 +1,4 @@
-
-eval "$(/usr/local/bin/brew shellenv)"
+# Add Homebrew shell environment configuration only on macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi

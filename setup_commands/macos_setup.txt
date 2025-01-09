@@ -6,9 +6,8 @@ ln -s /Users/ahmedaaali/projects/config/iterm2 /Users/ahmedaaali/.config/iterm2
 ln -s /Users/ahmedaaali/projects/config/nvim /Users/ahmedaaali/.config/nvim
 ln -s /Users/ahmedaaali/projects/config/raycast /Users/ahmedaaali/.config/raycast
 ln -s /Users/ahmedaaali/projects/config/thefuck /Users/ahmedaaali/.config/thefuck
-ln -s /Users/ahmedaaali/projects/config/tmux /Users/ahmedaaali/.config/tmux
+ln -s /Users/ahmedaaali/projects/config/tmux/ /Users/ahmedaaali/.config/tmux
 ln -s /Users/ahmedaaali/projects/config/wireshark /Users/ahmedaaali/.config/wireshark
-ln -s /Users/ahmedaaali/projects/config/tmux/.tmux ~/.tmux
 ln -s /Users/ahmedaaali/projects/config/home/gitconfig ~/.gitconfig
 ln -s /Users/ahmedaaali/projects/config/home/local ~/.local
 ln -s /Users/ahmedaaali/projects/config/home/npm ~/.npm
@@ -66,6 +65,9 @@ brew install reattach-to-user-namespace
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
+
+#tmux
+~/.tmux/plugins/tpm/bin/install_plugins
 
 #Only to setup again
 # -- p10k configure
