@@ -20,6 +20,14 @@ mkdir -p ~/.config
 mkdir -p ~/projects && cd ~/projects
 
 sudo apt install neovim git -y
+#or
+wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz
+wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz.sha256sum
+sha256sum -c nvim-linux64.tar.gz.sha256sum
+tar -xzvf nvim-linux64.tar.gz
+sudo mv nvim-linux64 /opt/neovim
+rm -rf nvim-linux64.tar.gz.sha256sum nvim-linux64.tar.gz
+
 echo $SHELL
 sudo apt install zsh -y
 sudo apt install curl -y
