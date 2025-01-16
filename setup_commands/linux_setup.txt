@@ -75,7 +75,7 @@ sudo dpkg -i wezterm-nightly.deb
 sudo apt --fix-broken install
 #fonts
 
-sudo apt install xsel xclip python3 python3-venv npm bat screen eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git neovim ripgrep tmux thefuck -y
+sudo apt install xsel xclip python3 python3-venv npm bat screen eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git neovim ripgrep tmux thefuck git-delta -y
 
 sudo apt install fontconfig
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
@@ -125,10 +125,27 @@ curl https://pyenv.run | bash
 #tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
+#ctrl+A + Shift+I
+#remove all plugings
+st
+#ctrl+A + Alt+u
+#add plugins again
+st
+#ctrl+A + Shift+I
 
 #Only to setup again
 # -- p10k configure
 
 #Only if it isn't already available in config folder
+cd ~/.config/bat/themes/
+batcat cache --build
+#or
+bat cache --build
 # curl -O https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/sublime/tokyonight_night.tmTheme
 # curl https://raw.githubusercontent.com/josean-dev/dev-environment-files/main/coolnight.itermcolors --output ~/coolnight.itermcolors
+
+#lazygit
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit -D -t /usr/local/bin/
