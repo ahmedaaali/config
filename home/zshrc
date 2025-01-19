@@ -271,8 +271,8 @@ gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git branch -m
 # gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git remote rename origin "$1" && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u "$1" main}
 alias grb="git pull --rebase cloud main"
 alias grc="git pull --rebase"
-gn() {git stash && git pull --rebase --reapply-cherry-picks cloud main && git switch main && git pull && git switch "$1" && git stash pop}
-gnc() {git stash && git pull --rebase "$1" main && git switch main && git pull && git switch "$1" && git stash pop}
+gn() {git stash && git fetch cloud && git rebase --reapply-cherry-picks cloud/main && git switch main && git pull && git switch "$1" && git stash pop}
+gnc() {git stash && git fetch "$1" && git rebase --reapply-cherry-picks "$1"/main && git switch main && git pull && git switch "$2" && git stash pop}
 #docker
 alias dc="docker compose"
 alias dp="docker ps"
