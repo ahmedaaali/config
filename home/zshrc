@@ -238,6 +238,8 @@ alias gswm="git switch main"
 alias gswd="git switch develop"
 alias gswdo="git switch docs"
 alias gs="git status"
+alias gst="git stash"
+alias gsp="git stash pop"
 alias ga="git add"
 alias gap="git add -p"
 alias gc="git commit -m"
@@ -265,8 +267,8 @@ gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git branch -m
 # gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git remote rename origin "$1" && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u "$1" main}
 alias grb="git pull --rebase cloud main"
 alias grc="git pull --rebase"
-gn() {git pull --rebase cloud main && git switch main && git pull && git switch "$1"}
-gnc() {git pull --rebase "$1" main && git switch main && git pull && git switch "$1"}
+gn() {git stash && git pull --rebase cloud main && git switch main && git pull && git switch "$1" && git stash pop}
+gnc() {git stash && git pull --rebase "$1" main && git switch main && git pull && git switch "$1" && git stash pop}
 #docker
 alias dc="docker compose"
 alias dp="docker ps"
