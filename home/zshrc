@@ -176,6 +176,7 @@ alias sau="sudo apt update -y && full-upgrade -y"
 alias sai="sudo apt install"
 saiy() {sudo apt install "$1" -y}
 alias ai="apt install"
+alias sssh="sudo systemctl restart ssh"
 alias mkd="mkdir"
 working_dir="~/projects/stm/stm32f429"
 alias mka="make all -C $working_dir/make/"
