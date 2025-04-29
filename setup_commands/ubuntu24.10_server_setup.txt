@@ -1,0 +1,140 @@
+mkdir -p ~/.config
+mkdir -p ~/projects && cd ~/projects
+
+sudo apt install neovim git -y
+#or
+wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz
+wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim-linux64.tar.gz.sha256sum
+sha256sum -c nvim-linux64.tar.gz.sha256sum
+tar -xzvf nvim-linux64.tar.gz
+sudo mv nvim-linux64 /opt/neovim
+rm -rf nvim-linux64.tar.gz.sha256sum nvim-linux64.tar.gz
+#or
+sudo apt install -y ninja-build gettext cmake unzip curl doxygen libtool libtool-bin autoconf automake cmake g++ pkg-config libncurses5-dev
+git clone https://github.com/neovim/neovim
+cd neovim
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
+nvim -v
+which neovim
+#then rm -rf neovim
+#sudo nvim not working:
+sudo visudo
+#then append nvim path to end of Defaults path near the top of the file
+
+echo $SHELL
+sudo apt install zsh -y
+sudo apt install curl -y
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" -y
+git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+ZSH_THEME="powerlevel10k/powerlevel10k"
+chsh -s $(which zsh)
+source ~/.zshrc
+
+ln -s /home/ahmed-aaa/projects/config/setup_commands/ /home/ahmed-aaa/setup_commands
+ln -s /home/ahmed-aaa/projects/config/bat /home/ahmed-aaa/.config/bat
+ln -s /home/ahmed-aaa/projects/config/coolnight.itermcolors /home/ahmed-aaa/.config/coolnight.itermcolors
+ln -s /home/ahmed-aaa/projects/config/nvim /home/ahmed-aaa/.config/nvim
+ln -s /home/ahmed-aaa/projects/config/thefuck /home/ahmed-aaa/.config/thefuck
+ln -s /home/ahmed-aaa/projects/config/tmux/ /home/ahmed-aaa/.config/tmux
+ln -s /home/ahmed-aaa/projects/config/tmux/.tmux/ /home/ahmed-aaa/.tmux
+ln -s /home/ahmed-aaa/projects/config/home/gitconfig /home/ahmed-aaa/.gitconfig
+ln -s /home/ahmed-aaa/projects/config/home/npm /home/ahmed-aaa/.npm
+ln -s /home/ahmed-aaa/projects/config/home/oh-my-zsh /home/ahmed-aaa/.oh-my-zsh
+ln -s /home/ahmed-aaa/projects/config/home/fzf-git.sh/ /home/ahmed-aaa/fzf-git.sh
+ln -s /home/ahmed-aaa/projects/config/home/p10k.zsh /home/ahmed-aaa/.p10k.zsh
+ln -s /home/ahmed-aaa/projects/config/home/screenrc /home/ahmed-aaa/.screenrc
+ln -s /home/ahmed-aaa/projects/config/home/viminfo /home/ahmed-aaa/.viminfo
+ln -s /home/ahmed-aaa/projects/config/home/vscode /home/ahmed-aaa/.vscode
+ln -s /home/ahmed-aaa/projects/config/home/wezterm.lua /home/ahmed-aaa/.wezterm.lua
+ln -s /home/ahmed-aaa/projects/config/home/zhistory /home/ahmed-aaa/.zhistory
+ln -s /home/ahmed-aaa/projects/config/home/zprofile /home/ahmed-aaa/.zprofile
+ln -s /home/ahmed-aaa/projects/config/home/zsh_history /home/ahmed-aaa/.zsh_history
+ln -s /home/ahmed-aaa/projects/config/home/zsh_sessions /home/ahmed-aaa/.zsh_sessions
+ln -s /home/ahmed-aaa/projects/config/home/zshrc /home/ahmed-aaa/.zshrc
+
+ln -s /home/ahmed-aaa/projects/config/home/zshrc.pre-oh-my-zsh /home/ahmed-aaa/.zshrc.pre-oh-my-zsh
+ln -s /home/ahmed-aaa/projects/config/home/local /home/ahmed-aaa/.local
+ln -s /home/ahmed-aaa/projects/config/aerospace /home/ahmed-aaa/.config/aerospace
+ln -s /home/ahmed-aaa/projects/config/raycast /home/ahmed-aaa/.config/raycast
+ln -s /home/ahmed-aaa/projects/config/wireshark /home/ahmed-aaa/.config/wireshark
+ln -s /home/ahmed-aaa/projects/config/iterm2 /home/ahmed-aaa/.config/iterm2
+
+sudo apt install python3 bat eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git ripgrep tmux thefuck git-delta -y
+
+#fonts
+sudo apt install -y fontconfig
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
+mkdir -p ~/.local/share/fonts
+unzip Meslo.zip -d ~/.local/share/fonts
+cd ~/.local/share/fonts
+rm *Windows*
+cd ~
+rm Meslo.zip
+fc-cache -fv
+
+#If needed
+git clone https://github.com/joshskidmore/zsh-fzf-history-search ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-fzf-history-search
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search zsh-fzf-history-search)
+
+#fzf
+sudo apt install build-essential cmake gcc -y
+cd ~/.local/share/nvim/lazy/telescope-fzf-native.nvim
+make
+#or
+/usr/bin/make
+ls build/libfzf.so
+
+#pyenv
+sudo apt install -y \
+  build-essential \
+  libssl-dev \
+  zlib1g-dev \
+  libbz2-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  wget \
+  curl \
+  llvm \
+  libncurses5-dev \
+  libgdbm-dev \
+  libnss3-dev \
+  libffi-dev \
+  liblzma-dev \
+  tk-dev \
+  libyaml-dev \
+  python3-openssl \
+  git
+curl https://pyenv.run | bash
+
+#tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+~/.tmux/plugins/tpm/bin/install_plugins
+#ctrl+A + Shift+I
+#remove all plugings
+st
+#ctrl+A + Alt+u
+#add plugins again
+st
+#ctrl+A + Shift+I
+
+#Only to setup again
+# p10k configure
+
+#Only if it isn't already available in config folder
+cd ~/.config/bat/themes/
+batcat cache --build
+#or
+bat cache --build
+# curl -O https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/sublime/tokyonight_night.tmTheme
+# curl https://raw.githubusercontent.com/josean-dev/dev-environment-files/main/coolnight.itermcolors --output ~/coolnight.itermcolors
+
+#lazygit
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit -D -t /usr/local/bin/
+rm lazygit lazygit.tar.gz
+which lazygit
