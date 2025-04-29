@@ -12,7 +12,7 @@ ln -s /Users/ahmedaaali/projects/config/home/gitconfig ~/.gitconfig
 ln -s /Users/ahmedaaali/projects/config/home/local ~/.local
 ln -s /Users/ahmedaaali/projects/config/home/npm ~/.npm
 ln -s /Users/ahmedaaali/projects/config/home/oh-my-zsh ~/.oh-my-zsh
-ln -s /Users/ahmedaaali/projects/config/home/fzf-git.sh ~/fzf-git.sh/
+ln -s /Users/ahmedaaali/projects/config/home/fzf-git.sh/ ~/fzf-git.sh/
 ln -s /Users/ahmedaaali/projects/config/home/p10k.zsh ~/.p10k.zsh
 ln -s /Users/ahmedaaali/projects/config/home/screenrc ~/.screenrc
 ln -s /Users/ahmedaaali/projects/config/home/viminfo ~/.viminfo
@@ -44,7 +44,7 @@ brew install python3 npm bat screen eza fzf openssl@3 python@3.12 zoxide zsh-aut
 
 #fonts
 
-sudo apt install fontconfig
+sudo apt install -y fontconfig
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
 mkdir -p ~/.local/share/fonts
 unzip Meslo.zip -d ~/.local/share/fonts
@@ -62,9 +62,10 @@ source ~/.zshrc
 #If needed
 brew install jesseduffield/lazygit/lazygit
 brew install reattach-to-user-namespace
+git clone https://github.com/joshskidmore/zsh-fzf-history-search ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-fzf-history-search
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search zsh-fzf-history-search)
 
 #tmux
 ~/.tmux/plugins/tpm/bin/install_plugins

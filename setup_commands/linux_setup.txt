@@ -7,14 +7,6 @@ sudo apt-get install open-vm-tools-desktop
 Restart VMware Tools
 vmware-user
 sudo apt install -y --reinstall open-vm-tools-desktop fuse
-sudo apt install neovim git -y
-
-mkdir -p ~/.config
-mkdir -p ~/projects && cd ~/projects
-
-sudo apt install neovim git -y
-echo $SHELL
-chsh -s $(which zsh)
 
 mkdir -p ~/.config
 mkdir -p ~/projects && cd ~/projects
@@ -38,12 +30,6 @@ chsh -s $(which zsh)
 source ~/.zshrc
 
 ln -s /home/ahmedaaali/projects/config/setup_commands/ /home/ahmedaaali/setup_commands
-ln -s /home/ahmedaaali/projects/config/aerospace /home/ahmedaaali/.config/aerospace
-
-mkdir -p ~/.config
-mkdir -p ~/projects && cd ~/projects
-
-ln -s /home/ahmedaaali/projects/config/setup_commands/ /home/ahmedaaali/setup_commands
 ln -s /home/ahmedaaali/projects/config/bat /home/ahmedaaali/.config/bat
 ln -s /home/ahmedaaali/projects/config/coolnight.itermcolors /home/ahmedaaali/.config/coolnight.itermcolors
 ln -s /home/ahmedaaali/projects/config/nvim /home/ahmedaaali/.config/nvim
@@ -53,7 +39,7 @@ ln -s /home/ahmedaaali/projects/config/tmux/.tmux/ /home/ahmedaaali/.tmux
 ln -s /home/ahmedaaali/projects/config/home/gitconfig /home/ahmedaaali/.gitconfig
 ln -s /home/ahmedaaali/projects/config/home/npm /home/ahmedaaali/.npm
 ln -s /home/ahmedaaali/projects/config/home/oh-my-zsh /home/ahmedaaali/.oh-my-zsh
-ln -s /home/ahmedaaali/projects/config/home/fzf-git.sh /home/ahmedaaali/fzf-git.sh
+ln -s /home/ahmedaaali/projects/config/home/fzf-git.sh/ /home/ahmedaaali/fzf-git.sh
 ln -s /home/ahmedaaali/projects/config/home/p10k.zsh /home/ahmedaaali/.p10k.zsh
 ln -s /home/ahmedaaali/projects/config/home/screenrc /home/ahmedaaali/.screenrc
 ln -s /home/ahmedaaali/projects/config/home/viminfo /home/ahmedaaali/.viminfo
@@ -81,11 +67,11 @@ sudo apt install wezterm-nightly
 wget https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.deb
 sudo dpkg -i wezterm-nightly.deb
 sudo apt --fix-broken install
-#fonts
 
 sudo apt install xsel xclip python3 python3-venv npm bat screen eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git neovim ripgrep tmux thefuck git-delta -y
 
-sudo apt install fontconfig
+#fonts
+sudo apt install -y fontconfig
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
 mkdir -p ~/.local/share/fonts
 unzip Meslo.zip -d ~/.local/share/fonts
@@ -96,9 +82,10 @@ rm Meslo.zip
 fc-cache -fv
 
 #If needed
+git clone https://github.com/joshskidmore/zsh-fzf-history-search ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-fzf-history-search
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search zsh-fzf-history-search)
 
 #fzf
 sudo apt install build-essential cmake gcc -y
@@ -157,3 +144,9 @@ LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/re
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
 sudo install lazygit -D -t /usr/local/bin/
+rm lazygit lazygit.tar.gz
+which lazygit
+
+#sudo nvim not working:
+sudo visudo
+#then append nvim path to end of Defaults path near the top of the file

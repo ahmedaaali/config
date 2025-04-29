@@ -1,0 +1,7 @@
+#block file from being changed
+sudo chattr +i /etc/
+#allow file to be changed again
+sudo chattr -i /etc/
+
+#scp replacement command
+ssh user@hostname "sudo cat /etc/NetworkManager/system-connections/network.nmconnection" > network.nmconnection

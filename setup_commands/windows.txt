@@ -1,0 +1,123 @@
+#Enable remote desktop use microsoft account to login:
+runas /u:MicrosoftAccount\username@example.com winver
+
+cmd.exe /C "rundll32.exe powrprof.dll,SetSuspendState Sleep"
+cmd.exe /C "shutdown /s /t 0"
+powershell.exe -Command "Stop-Computer"
+powershell.exe -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.Application]::SetSuspendState('Suspend', $false, $false)"
+
+#Windows to WSL2 forwarding commands:
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40698 connectaddress=172.26.56.241 connectport=40698
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40699 connectaddress=172.26.56.241 connectport=40699
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40700 connectaddress=172.26.56.241 connectport=40700
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40701 connectaddress=172.26.56.241 connectport=40701
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40702 connectaddress=172.26.56.241 connectport=40702
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40703 connectaddress=172.26.56.241 connectport=40703
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40704 connectaddress=172.26.56.241 connectport=40704
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40705 connectaddress=172.26.56.241 connectport=40705
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40706 connectaddress=172.26.56.241 connectport=40706
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40707 connectaddress=172.26.56.241 connectport=40707
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40708 connectaddress=172.26.56.241 connectport=40708
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=8123 connectaddress=172.26.56.241 connectport=8123
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=32400 connectaddress=172.26.56.241 connectport=32400
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=2016 connectaddress=172.26.56.241 connectport=22
+
+netsh interface portproxy show all
+netsh interface portproxy reset
+
+netsh interface portproxy delete v4tov4 listenport=51820 listenaddress=0.0.0.0
+netsh interface portproxy delete v4tov4 listenport=443 listenaddress=0.0.0.0
+netsh interface portproxy delete v4tov4 listenport=80 listenaddress=0.0.0.0
+netsh interface portproxy delete v4tov4 listenport=8123 listenaddress=0.0.0.0
+netsh interface portproxy delete v4tov4 listenport=32400 listenaddress=0.0.0.0
+
+
+#Windows firewall commands:
+New-NetFirewallRule -Name sshd -DisplayName "OpenSSH Server (SSH)" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+New-NetFirewallRule -Name sshd-custom -DisplayName "OpenSSH Custom Port" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 2222
+
+# New-NetFirewallRule -Name postgres_pc -DisplayName "Postgres PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 5432
+# New-NetFirewallRule -Name redis_pc -DisplayName "Redis PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 6379
+# New-NetFirewallRule -Name heimdall_pc -DisplayName "Heimdall PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 8443
+# New-NetFirewallRule -Name nextcloud_pc -DisplayName "Nextcloud PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 8083
+# New-NetFirewallRule -Name plex_pc -DisplayName "Plex PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 32400
+# New-NetFirewallRule -Name sonarr_pc -DisplayName "Sonarr PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 8989
+# New-NetFirewallRule -Name radarr_pc -DisplayName "Radarr PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 7878
+# New-NetFirewallRule -Name jackett_pc -DisplayName "Jackett PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 9117
+# New-NetFirewallRule -Name jellyfin_pc -DisplayName "Jellyfin PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 8096
+
+New-NetFirewallRule -Name "nextcloud_pc" -DisplayName "Nextcloud PC: Allow Port 8083 from RPi5" -Direction Inbound -Protocol TCP -LocalPort 8083 -Action Allow -RemoteAddress 192.168.0.106 -Profile Private
+
+
+Remove-NetFirewallRule -Name "postgres_pc"
+Remove-NetFirewallRule -Name "redis_pc"
+Remove-NetFirewallRule -Name "heimdall_pc"
+Remove-NetFirewallRule -Name "nextcloud_pc"
+Remove-NetFirewallRule -Name "plex_pc"
+Remove-NetFirewallRule -Name "sonarr_pc"
+Remove-NetFirewallRule -Name "radarr_pc"
+Remove-NetFirewallRule -Name "jackett_pc"
+Remove-NetFirewallRule -Name "jellyfin_pc"
+
+#Enable firewall or disable
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+
+#To list all firewall rules, open PowerShell as Administrator and run:
+Get-NetFirewallRule | Format-Table -AutoSize
+
+#To filter for a specific port (e.g., 80):
+Get-NetFirewallRule | Where-Object { $_.LocalPort -eq 80 }
+
+#If that doesn't work, try:
+Get-NetFirewallPortFilter | Where-Object { $_.LocalPort -eq 80 }
+
+#To view rules by name:
+Get-NetFirewallRule | Select-Object Name,DisplayName,Enabled,Direction,Action
+
+#To check inbound rules specifically:
+Get-NetFirewallRule -Direction Inbound | Format-Table -AutoSize
+
+#If you found a rule with a name (e.g., Allow Port 80), get detailed info:
+Get-NetFirewallRule -Name "Allow Port 80" | Format-List *
+
+#To check if it applies to a specific program:
+Get-NetFirewallApplicationFilter -AssociatedNetFirewallRule "Allow Port 80"
+
+#If things are too messy, you can reset all rules:
+netsh advfirewall reset
+
+#To allow port 80:
+New-NetFirewallRule -DisplayName "Allow Port 80" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 80
+
+#To block port 80:
+New-NetFirewallRule -DisplayName "Block Port 80" -Direction Inbound -Action Block -Protocol TCP -LocalPort 80
+
+#Check if a Rule is Active:
+Get-NetFirewallRule -Name "Allow Port 80" | Select-Object Enabled
+
+#If Enabled is False, enable it:
+Set-NetFirewallRule -Name "Allow Port 80" -Enabled True
+
+#To list only non-default (custom) rules, run:
+Get-NetFirewallRule | Where-Object { $_.Group -eq $null } | Format-Table -AutoSize
+
+#If you remember part of the rule name, search for it:
+Get-NetFirewallRule | Where-Object { $_.DisplayName -like "*80*" }
+Get-NetFirewallRule | Where-Object { $_.DisplayName -like "*ssh*" }
+
+#To find rules that apply to a specific port (e.g., 80):
+Get-NetFirewallPortFilter | Where-Object { $_.LocalPort -eq 80 }
+Get-NetFirewallRule | Where-Object { $_.LocalPort -eq 80 } | Format-List *
+
+#If you just created a rule and want to find it:
+Get-NetFirewallRule | Where-Object { $_.CreationTime -gt (Get-Date).AddDays(-1) }
+
+#Once you’ve found the rule, delete it:
+Remove-NetFirewallRule -Name "Allow Port 80"
+
+#To delete all custom rules (be careful!):
+Get-NetFirewallRule | Where-Object { $_.Group -eq $null } | Remove-NetFirewallRule
+
+#Check if the rule still exists:
+Get-NetFirewallRule | Where-Object { $_.LocalPort -eq 80 }
