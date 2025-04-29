@@ -144,7 +144,9 @@ bindkey "˙" backward-word
 
 
 #aliases:
-alias python="python3"
+alias wol="wakeonlan -i 192.168.0.113 -p 10 d8:43:ae:c0:a3:3b"
+alias dol="ssh -T -p 2002 ahmed@7amada.lol 'cmd.exe /C 'rundll32.exe powrprof.dll,SetSuspendState Sleep''"
+# alias python="python3"
 alias py="python3"
 alias pyv="python3 --version"
 alias pym="python3 -m venv"
@@ -257,6 +259,7 @@ alias gp="git push"
 [[ -n $(alias gpu 2>/dev/null) ]] && unalias gpu
 alias gpu="git push -u cloud"
 alias gpl="git pull"
+alias grm="git rm -r"
 alias grs="git restore --staged"
 alias grf="git restore"
 alias gcll="git clone"
