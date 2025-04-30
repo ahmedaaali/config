@@ -150,8 +150,8 @@ t() {eza --color=always --long --no-filesize --icons=always --no-time --no-user 
 lw() {ls "$1" -1 | wc -l} 
 
 #zoxide
-eval "$(zoxide init zsh)"
-alias cd="z"
+#eval "$(zoxide init zsh)"
+#alias cd="z"
 
 
 #key Binds:
@@ -283,6 +283,7 @@ alias gp="git push"
 [[ -n $(alias gpu 2>/dev/null) ]] && unalias gpu
 alias gpu="git push -u cloud"
 alias gpl="git pull"
+alias gplr="git pull --recurse-submodules && git submodule update --init --recursive"
 alias grm="git rm -r"
 alias grs="git restore --staged"
 alias grf="git restore"
