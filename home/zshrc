@@ -296,7 +296,7 @@ gcl() {git clone --recurse-submodules git@github.com:ahmedaaali/"$1".git && cd "
 gsa() {git submodule add -b main git@github.com:ahmedaaali/"$1".git}
 [[ -n $(alias gra 2>/dev/null) ]] && unalias gra
 gra() {git init && git remote add cloud git@github.com:ahmedaaali/"$1".git}
-gahmed() {echo ".DS_Store" >> .gitignore && git add .gitignore && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u cloud main}
+gahmed() {git remote rename origin cloud && git config user.name "Ahmed Ali" && git config user.email "ahmedaali2025@gmail.com" && echo ".DS_Store" >> .gitignore && git add .gitignore && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u cloud main}
 gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u "$1" main}
 # gahmed() {echo ".DS_Store" >> .gitignore && git add .gitignore && git remote rename origin cloud && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u cloud main}
 # gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git remote rename origin "$1" && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u "$1" main}
