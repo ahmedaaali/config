@@ -1,12 +1,21 @@
-#vmware:
-sudo add-apt-repository ppa:oibaf/graphics-drivers
+#vm:
 sudo apt install gnome-tweaks
 gnome-tweaks
+
+#vmware specific:
 sudo apt-get install open-vm-tools-desktop
 #debug
-Restart VMware Tools
+#Restart VMware Tools
 vmware-user
 sudo apt install -y --reinstall open-vm-tools-desktop fuse
+vmware-user
+
+#might break graphics, 3d acceleration:
+sudo add-apt-repository ppa:oibaf/graphics-drivers
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+google-chrome &
 
 mkdir -p ~/.config
 mkdir -p ~/projects && cd ~/projects
