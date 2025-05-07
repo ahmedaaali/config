@@ -17,6 +17,19 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 google-chrome &
 
+#init user as sudo
+sudo usermod -aG sudo ahmed
+sudo whoami
+#or
+su -
+sudo usermod -aG sudo ahmed
+sudo whoami
+#or
+visudo
+#add to the last line:
+ahmed ALL=(ALL:ALL) ALL
+sudo whoami
+
 mkdir -p ~/.config
 mkdir -p ~/projects && cd ~/projects
 
