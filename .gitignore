@@ -1,7 +1,6 @@
 .DS_Store
 home/npm
 home/vscode
-home/oh-my-zsh
 tmux/.tmux/plugins
 tmux/plugins
 raycast/
