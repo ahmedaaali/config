@@ -5,3 +5,19 @@ sudo chattr -i /etc/
 
 #scp replacement command
 ssh user@hostname "sudo cat /etc/NetworkManager/system-connections/network.nmconnection" > network.nmconnection
+
+adduser ahmed
+usermod -aG sudo ahmed
+rsync -av --chown=ahmed:ahmed \
+  /root/.zshrc /root/.gitconfig /root/.config /root/.local \
+  /home/ahmed/
+mkdir -p /home/ahmed/.ssh
+cp /root/.ssh/id_ed25519* /home/ahmed/.ssh/
+chown -R ahmed:ahmed /home/ahmed/.ssh
+chmod 700 /home/ahmed/.ssh
+chmod 600 /home/ahmed/.ssh/id_ed25519
+chmod 644 /home/ahmed/.ssh/id_ed25519.pub
+chsh -s /bin/zsh ahmed
+sudo chown -R ahmed-aaa:ahmed-aaa /home/ahmed-aaa
+
+sudo setcap cap_net_raw+ep /bin/ping
