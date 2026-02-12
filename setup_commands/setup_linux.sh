@@ -120,7 +120,7 @@ setup_git_ssh(){
     info "Generating new SSH key …"
     RAU "install -d -m 700 '$SSH_DIR'"
     RAU "[[ -L '$AUTH_KEYS' ]]" && warn "'authorized_keys' is symlink – leaving untouched"
-    RAU "ssh-keygen -q -t ed25519 -C '$GIT_EMAIL' -f '$KEY' -N ''"
+    RAU "ssh-keygen -q -t ed25519 -C '$GIT_EMAIL' -f '$KEY' -N 'Ahmed'"
   fi
   RAU "eval \$(ssh-agent -s); ssh-add -q '$KEY'"
   if command -v xclip &>/dev/null && [[ -n ${DISPLAY:-} ]];then

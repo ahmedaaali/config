@@ -1,0 +1,8 @@
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up --accept routes
+la /etc/sysctl.d
+echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf\necho 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf\nsudo sysctl -p /etc/sysctl.d/99-tailscale.conf
+sudo tailscale set --advertise-routes=192.168.221.0/24
+sudo tailscale down
+sudo systemctl stop tailscaled
+sudo systemctl disable tailscaled

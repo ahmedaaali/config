@@ -41,6 +41,13 @@ sha256sum -c nvim-linux64.tar.gz.sha256sum
 tar -xzvf nvim-linux64.tar.gz
 sudo mv nvim-linux64 /opt/neovim
 rm -rf nvim-linux64.tar.gz.sha256sum nvim-linux64.tar.gz
+#or
+wget https://github.com/neovim/neovim/releases/download/v0.11.2/nvim-linux-arm64.tar.gz
+wget https://github.com/neovim/neovim/releases/download/v0.11.2/nvim-linux-arm64.tar.gz.sha256sum
+sha256sum -c nvim-linux-arm64.tar.gz.sha256sum
+tar -xzvf nvim-linux-arm64.tar.gz
+sudo mv nvim-linux-arm64 /opt/neovim
+rm -rf nvim-linux-arm64.tar.gz nvim-linux64.tar.gz.sha256sum
 
 echo $SHELL
 sudo apt install zsh -y
@@ -51,34 +58,33 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 chsh -s $(which zsh)
 source ~/.zshrc
 
-ln -s /home/ahmedaaali/projects/config/setup_commands/ /home/ahmedaaali/setup_commands
-ln -s /home/ahmedaaali/projects/config/bat /home/ahmedaaali/.config/bat
-ln -s /home/ahmedaaali/projects/config/coolnight.itermcolors /home/ahmedaaali/.config/coolnight.itermcolors
-ln -s /home/ahmedaaali/projects/config/nvim /home/ahmedaaali/.config/nvim
-ln -s /home/ahmedaaali/projects/config/thefuck /home/ahmedaaali/.config/thefuck
-ln -s /home/ahmedaaali/projects/config/tmux/ /home/ahmedaaali/.config/tmux
-ln -s /home/ahmedaaali/projects/config/tmux/.tmux/ /home/ahmedaaali/.tmux
-ln -s /home/ahmedaaali/projects/config/home/gitconfig /home/ahmedaaali/.gitconfig
-ln -s /home/ahmedaaali/projects/config/home/npm /home/ahmedaaali/.npm
-ln -s /home/ahmedaaali/projects/config/home/oh-my-zsh /home/ahmedaaali/.oh-my-zsh
-ln -s /home/ahmedaaali/projects/config/home/fzf-git.sh/ /home/ahmedaaali/fzf-git.sh
-ln -s /home/ahmedaaali/projects/config/home/p10k.zsh /home/ahmedaaali/.p10k.zsh
-ln -s /home/ahmedaaali/projects/config/home/screenrc /home/ahmedaaali/.screenrc
-ln -s /home/ahmedaaali/projects/config/home/viminfo /home/ahmedaaali/.viminfo
-ln -s /home/ahmedaaali/projects/config/home/vscode /home/ahmedaaali/.vscode
-ln -s /home/ahmedaaali/projects/config/home/wezterm.lua /home/ahmedaaali/.wezterm.lua
-ln -s /home/ahmedaaali/projects/config/home/zhistory /home/ahmedaaali/.zhistory
-ln -s /home/ahmedaaali/projects/config/home/zprofile /home/ahmedaaali/.zprofile
-ln -s /home/ahmedaaali/projects/config/home/zsh_history /home/ahmedaaali/.zsh_history
-ln -s /home/ahmedaaali/projects/config/home/zsh_sessions /home/ahmedaaali/.zsh_sessions
-ln -s /home/ahmedaaali/projects/config/home/zshrc /home/ahmedaaali/.zshrc
+ln -s ~/projects/config/setup_commands/ ~/setup_commands
+ln -s ~/projects/config/bat ~/.config/bat
+ln -s ~/projects/config/coolnight.itermcolors ~/.config/coolnight.itermcolors
+ln -s ~/projects/config/nvim ~/.config/nvim
+ln -s ~/projects/config/thefuck ~/.config/thefuck
+ln -s ~/projects/config/tmux/ ~/.config/tmux
+ln -s ~/projects/config/tmux/.tmux/ ~/.tmux
+ln -s ~/projects/config/home/gitconfig ~/.gitconfig
+ln -s ~/projects/config/home/oh-my-zsh ~/.oh-my-zsh
+ln -s ~/projects/config/home/fzf-git.sh/ ~/fzf-git.sh
+ln -s ~/projects/config/home/p10k.zsh ~/.p10k.zsh
+ln -s ~/projects/config/home/screenrc ~/.screenrc
+ln -s ~/projects/config/home/viminfo ~/.viminfo
+ln -s ~/projects/config/home/vscode ~/.vscode
+ln -s ~/projects/config/home/wezterm.lua ~/.wezterm.lua
+ln -s ~/projects/config/home/zhistory ~/.zhistory
+ln -s ~/projects/config/home/zprofile ~/.zprofile
+ln -s ~/projects/config/home/zsh_history ~/.zsh_history
+ln -s ~/projects/config/home/zsh_sessions ~/.zsh_sessions
+ln -s ~/projects/config/home/zshrc ~/.zshrc
 
-ln -s /home/ahmedaaali/projects/config/home/zshrc.pre-oh-my-zsh /home/ahmedaaali/.zshrc.pre-oh-my-zsh
-ln -s /home/ahmedaaali/projects/config/home/local /home/ahmedaaali/.local
-ln -s /home/ahmedaaali/projects/config/aerospace /home/ahmedaaali/.config/aerospace
-ln -s /home/ahmedaaali/projects/config/raycast /home/ahmedaaali/.config/raycast
-ln -s /home/ahmedaaali/projects/config/wireshark /home/ahmedaaali/.config/wireshark
-ln -s /home/ahmedaaali/projects/config/iterm2 /home/ahmedaaali/.config/iterm2
+ln -s ~/projects/config/home/zshrc.pre-oh-my-zsh ~/.zshrc.pre-oh-my-zsh
+ln -s ~/projects/config/home/local ~/.local
+ln -s ~/projects/config/aerospace ~/.config/aerospace
+ln -s ~/projects/config/raycast ~/.config/raycast
+ln -s ~/projects/config/wireshark ~/.config/wireshark
+ln -s ~/projects/config/iterm2 ~/.config/iterm2
 
 #wezterm
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
@@ -90,7 +96,7 @@ wget https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.de
 sudo dpkg -i wezterm-nightly.deb
 sudo apt --fix-broken install
 
-sudo apt install xsel xclip python3 python3-venv npm bat screen eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git neovim ripgrep tmux thefuck git-delta -y
+sudo apt install xsel xclip python3 python3-venv npm bat screen eza fzf zoxide zsh-autosuggestions zsh-syntax-highlighting git neovim ripgrep tmux thefuck git-delta apt-transport-https ca-certificates gnupg -y
 
 #fonts
 sudo apt install -y fontconfig
@@ -172,3 +178,16 @@ which lazygit
 #sudo nvim not working:
 sudo visudo
 #then append nvim path to end of Defaults path near the top of the file
+
+#OpenTofu
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://get.opentofu.org/opentofu.gpg | sudo tee /etc/apt/keyrings/opentofu.gpg >/dev/null
+curl -fsSL https://packages.opentofu.org/opentofu/tofu/gpgkey | sudo gpg --no-tty --batch --dearmor -o /etc/apt/keyrings/opentofu-repo.gpg >/dev/null
+sudo chmod a+r /etc/apt/keyrings/opentofu.gpg /etc/apt/keyrings/opentofu-repo.gpg
+echo \
+  "deb [signed-by=/etc/apt/keyrings/opentofu.gpg,/etc/apt/keyrings/opentofu-repo.gpg] https://packages.opentofu.org/opentofu/tofu/any/ any main
+deb-src [signed-by=/etc/apt/keyrings/opentofu.gpg,/etc/apt/keyrings/opentofu-repo.gpg] https://packages.opentofu.org/opentofu/tofu/any/ any main" | \
+  sudo tee /etc/apt/sources.list.d/opentofu.list > /dev/null
+sudo chmod a+r /etc/apt/sources.list.d/opentofu.list
+sudo apt-get update
+sudo apt-get install -y tofu

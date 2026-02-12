@@ -146,12 +146,13 @@ alias la="eza --color=always --long --no-filesize --icons=always --no-time --no-
 alias ll="eza --color=always --long --icons=always"
 alias lg="eza --color=always --long --icons=always --no-time --no-permissions --git"
 alias tr="eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions --tree"
-t() {eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions --tree --level="$1"}
+ts() {eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions --tree --level="$1"}
+t() {eza -a --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions --tree --level="$1"}
 lw() {ls "$1" -1 | wc -l} 
 
 #zoxide
-#eval "$(zoxide init zsh)"
-#alias cd="z"
+eval "$(zoxide init zsh)"
+alias cd="z"
 
 
 #key Binds:
@@ -201,7 +202,6 @@ alias ar="apt remove"
 alias sar="sudo apt remove"
 alias sary="sudo apt remove -y"
 alias sssh="sudo systemctl restart ssh && ufw allow ssh && ufw enable"
-alias mkd="mkdir"
 working_dir="~/projects/stm/stm32f429"
 alias mka="make all -C $working_dir/make/"
 alias mkasm="make asm -C $working_dir/make/"
@@ -213,7 +213,7 @@ alias v="nvim"
 alias s="source"
 alias vz="nvim ~/.zshrc"
 alias sz="source ~/.zshrc"
-alias vt="nvim ~/.config/tmux/tmux.conf"
+# alias vt="nvim ~/.config/tmux/tmux.conf"
 alias st="tmux source ~/.config/tmux/tmux.conf"
 alias vs="nvim ~/.screenrc"
 alias vw="nvim ~/.wezterm.lua"
@@ -236,7 +236,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias to="touch"
-alias mkd="mkdir"
+alias mkd="mkdir -p"
 alias grp="grep -in"
 f() {find . -name "$1"}
 # alias ll="ls -l"
@@ -257,6 +257,23 @@ alias txs="tmux kill-server"
 alias tt="tmux attach -t"
 alias ta="tmux attach -t"
 alias tl="tmux ls"
+#terraform/opentofu:
+alias tf="tofu"
+alias tfii='PROJECT_ID=1 && TF_ADDRESS=https://gitlab.m3alem7am0shteka.ahmedaali.com:4069/api/v4/projects/$PROJECT_ID/terraform/state/m3alem7am0shtekas_gitlab && TF_LOCK_ADDRESS=$TF_ADDRESS/lock && TF_UNLOCK_ADDRESS=$TF_ADDRESS/lock && TF_USERNAME=tofu_bot && TF_LOCK_METHOD=POST && TF_UNLOCK_METHOD=DELETE && TF_RETRY_WAIT_MIN=5'
+alias tfi='tofu init -reconfigure -backend-config="address=${TF_ADDRESS}" -backend-config="lock_address=${TF_LOCK_ADDRESS}" -backend-config="unlock_address=${TF_UNLOCK_ADDRESS}" -backend-config="username=${TF_USERNAME}" -backend-config="password=${TF_VAR_gitlab_token}" -backend-config="lock_method=${TF_LOCK_METHOD}" -backend-config="unlock_method=${TF_UNLOCK_METHOD}" -backend-config="retry_wait_min=${TF_RETRY_WAIT_MIN}"'
+alias tff="tofu fmt --recursive"
+alias tfp="tofu plan"
+alias tfa="tofu apply"
+alias tfd="tofu destroy"
+alias tfpa="tofu plan -out plan.cache && tofu apply plan.cache"
+alias tfpar="tofu plan -out plan.cache && tofu apply plan.cache && rm plan.cache"
+alias tfim="tofu import"
+alias tfsh="tofu state show"
+alias tfsl="tofu state list"
+alias tfmv="tofu state mv"
+alias tfrm="tofu state rm"
+alias tfu="tofu force-unlock"
+tfo() {tofu output --json "$1" | jq -r "$2"}
 #git:
 alias gco="git checkout"
 alias gcb="git checkout -b"
@@ -280,19 +297,27 @@ alias gca="git commit -a -m"
 alias gl="git log --graph --decorate --all --topo-order --pretty='%w(100,0,6)%C(yellow)%h%C(bold)%C(blue)%d %C(cyan)%ar %C(green)%an%n%C(bold)%C(white)%s %N' --abbrev-commit"
 alias gll="git log"
 alias gp="git push"
+alias gpa="git push --set-upstream cloud ahmed"
+alias gpf='git push --force-with-lease --force-if-includes'
 [[ -n $(alias gpu 2>/dev/null) ]] && unalias gpu
 alias gpu="git push -u cloud"
 alias gpl="git pull"
 alias gplr="git pull --recurse-submodules && git submodule update --init --recursive"
+# git submodule deinit -f .
+# git submodule update --init --recursive --force
 alias grm="git rm -r"
+alias grmc="git rm --cached -r"
 alias grs="git restore --staged"
 alias grf="git restore"
 alias gcll="git clone"
 alias groc="git remote rename origin cloud"
 [[ -n $(alias gr 2>/dev/null) ]] && unalias gr
 gr() {git reset --soft HEAD~"$1"}
+gR() {git checkout main && git checkout --orphan main_empty && {git rm -rf . || true} && git commit --allow-empty -m "Initial commit" && git branch -M main}
 [[ -n $(alias gcl 2>/dev/null) ]] && unalias gcl
-gcl() {git clone --recurse-submodules git@github.com:ahmedaaali/"$1".git && cd "$1"}
+gcl() {git clone --recurse-submodules git@gitlab.m3alem7am0shteka.ahmedaali.com:homelab/"$1".git && cd "$1"}
+gclc() {git clone --recurse-submodules git@gitlab.m3alem7am0shteka.ahmedaali.com:"$1"/"$2".git && cd "$2"}
+gclg() {git clone --recurse-submodules git@github.com:ahmedaaali/"$1".git && cd "$1"}
 gsa() {git submodule add -b main git@github.com:ahmedaaali/"$1".git}
 [[ -n $(alias gra 2>/dev/null) ]] && unalias gra
 gra() {git init && git remote add cloud git@github.com:ahmedaaali/"$1".git}
@@ -302,8 +327,11 @@ gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git branch -m
 # gcustom() {echo ".DS_Store" >> .gitignore && git add .gitignore && git remote rename origin "$1" && git branch -m main && git commit --allow-empty -m "Initial commit" && git push -u "$1" main}
 alias grb="git pull --rebase cloud main"
 alias grc="git pull --rebase"
-gn() {git stash && git fetch cloud && git rebase --reapply-cherry-picks cloud/main && git switch main && git pull && git switch "$1" && git stash pop}
-gnc() {git stash && git fetch "$1" && git rebase --reapply-cherry-picks "$1"/main && git switch main && git pull && git switch "$2" && git stash pop}
+# gn() {git stash && git fetch cloud && git rebase --reapply-cherry-picks cloud/main && git switch main && git pull && git switch "$1" && git stash pop}
+# gnc() {git stash && git fetch "$1" && git rebase --reapply-cherry-picks "$1"/main && git switch main && git pull && git switch "$2" && git stash pop}
+alias grh="git fetch && git reset --hard cloud/main"
+gn() {git stash && git fetch cloud && git reset --hard cloud/main && git switch main && git pull && git switch "$1" && git stash pop}
+gnc() {git stash && git fetch "$1" && git reset --hard "$1"/main && git switch main && git pull && git switch "$2" && git stash pop}
 #docker
 alias dc="docker compose"
 alias dp="docker ps"

@@ -1,3 +1,43 @@
+# Resize WSL (Administrator PowerShell):
+wsl.exe --shutdown
+wsl --list --verbose
+wsl --manage Ubuntu-24.04 --resize 256GB
+Optimize-VHD -Path "C:\Users\ahmed\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx" -Mode Full
+# Step B
+lsblk
+df -h /
+sudo resize2fs /dev/sdd
+df -h /
+# Or:
+wsl --install -d Debian
+wsl --mount "C:\Users\ahmed\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx" --vhd --bare
+lsblk
+sudo e2fsck -f /dev/sdd
+sudo resize2fs /dev/sdd 256G
+exit
+wsl --unmount
+wsl --shutdown
+
+# New Hard drive:
+# Windows side (wsl or wsl.exe)
+GET-CimInstance -query "SELECT * from Win32_DiskDrive"
+wsl --shutdown
+wsl --mount \\.\PHYSICALDRIVE0 --bare
+# wsl --mount \\.\PHYSICALDRIVE0 --partition 1 --type ext4 --name media
+wsl --unmount \\.\PHYSICALDRIVE0
+# WSL side:
+sudo mkdir -p /media/wolf
+sudo chmod 000 /media/wolf
+lsblk -f
+sudo umount /media/wolf
+sudo chown -R $(id -u):$(id -g) /media/wolf
+sv /etc/fstab
+# UNCONFIGURED FSTAB FOR BASE SYSTEM
+#UUID=something       /media/wolf     ext4    defaults        0       0
+#/dev/sdd1      /media/wolf     ext4    defaults        0       0
+sudo systemctl daemon-reload
+sudo mount -a
+
 #Enable remote desktop use microsoft account to login:
 runas /u:MicrosoftAccount\username@example.com winver
 
@@ -5,6 +45,8 @@ cmd.exe /C "rundll32.exe powrprof.dll,SetSuspendState Sleep"
 cmd.exe /C "shutdown /s /t 0"
 powershell.exe -Command "Stop-Computer"
 powershell.exe -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.Application]::SetSuspendState('Suspend', $false, $false)"
+
+ipconfig /flushdns
 
 #Windows to WSL2 forwarding commands:
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40698 connectaddress=172.26.56.241 connectport=40698
@@ -20,7 +62,33 @@ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40707 conn
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40708 connectaddress=172.26.56.241 connectport=40708
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=8123 connectaddress=172.26.56.241 connectport=8123
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=32400 connectaddress=172.26.56.241 connectport=32400
+
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=2016 connectaddress=172.26.56.241 connectport=22
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=4073 connectaddress=172.26.56.241 connectport=4073
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40730 connectaddress=172.26.56.241 connectport=40730
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40073 connectaddress=172.26.56.241 connectport=40073
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=41473 connectaddress=172.26.56.241 connectport=41473
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=443 connectaddress=172.26.56.241 connectport=443
+
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=4073 connectaddress=172.26.56.241 connectport=4073
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40730 connectaddress=172.26.56.241 connectport=40730
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40073 connectaddress=172.26.56.241 connectport=40073
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=2016 connectaddress=172.26.56.241 connectport=22
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=80 connectaddress=172.26.56.241 connectport=80
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=443 connectaddress=172.26.56.241 connectport=443
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=41473 connectaddress=172.26.56.241 connectport=41473
+
+Add-NetNatStaticMapping -NatName "WSL" -Protocol UDP -ExternalIPAddress 0.0.0.0/0 -ExternalPort 50100-50200 -InternalIPAddress 172.26.56.241 -InternalPort 50100-50200
+$nat = "WSL"               # check with Get-NetNat
+$vm  = "172.30.40.100"     # your pinned WSL2 address
+
+50100..50200 | % {Add-NetNatStaticMapping -NatName "172.26.56.241" -Protocol UDP -ExternalIPAddress 0.0.0.0/0 -ExternalPort $_ -InternalIPAddress 172.26.56.241 -InternalPort $_}
+
+New-NetFirewallRule -Name traefik -DisplayName "Traefik HTTP/S" -Enabled True -Direction Inbound -Protocol TCP -LocalPort 80,4073,40730,40073 -Action Allow
+New-NetFirewallRule -Name radarr_pc -DisplayName "Radarr PC" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 7878
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=4073 connectaddress=127.0.0.1 connectport=4073
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40730 connectaddress=127.0.0.1 connectport=40730
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=40073 connectaddress=127.0.0.1 connectport=40073
 
 netsh interface portproxy show all
 netsh interface portproxy reset
@@ -30,6 +98,27 @@ netsh interface portproxy delete v4tov4 listenport=443 listenaddress=0.0.0.0
 netsh interface portproxy delete v4tov4 listenport=80 listenaddress=0.0.0.0
 netsh interface portproxy delete v4tov4 listenport=8123 listenaddress=0.0.0.0
 netsh interface portproxy delete v4tov4 listenport=32400 listenaddress=0.0.0.0
+
+
+
+# Remove any old LiveKit rules by DisplayName
+Get-NetFirewallRule -DisplayName "LiveKit UDP (Mirrored)" | Remove-NetFirewallRule -Confirm:$false
+Get-NetFirewallRule -DisplayName "LiveKit TCP (Mirrored)" | Remove-NetFirewallRule -Confirm:$false
+
+# Recreate them with a friendly Name so they show up under “Name” in wf.msc
+New-NetFirewallRule -Name "LiveKitUDP_Mirrored" -DisplayName "LiveKit UDP (Mirrored)" -Direction Inbound -Protocol UDP  -LocalPort 50800-50900 -Action Allow
+New-NetFirewallRule -Name "LiveKitTCP_Mirrored" -DisplayName "LiveKit TCP (Mirrored)" -Direction Inbound -Protocol TCP  -LocalPort 7881       -Action Allow
+
+# Verify they exist
+Get-NetFirewallRule -Name "LiveKitUDP_Mirrored","LiveKitTCP_Mirrored" | Format-Table Name,DisplayName,Protocol,LocalPort,Enabled -AutoSize
+
+# EL*EVATED* PowerShell
+$wslId = (Get-NetFirewallHyperVVMCreator |
+          Where-Object FriendlyName -eq 'WSL').VMCreatorId
+
+Set-NetFirewallHyperVVMSetting -Name $wslId `
+                               -LoopbackEnabled True `
+                               -DefaultInboundAction Allow
 
 
 #Windows firewall commands:

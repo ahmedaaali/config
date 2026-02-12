@@ -1,0 +1,264 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# PDF Compression + OCR Cheat Sheet (Docker-first)
+# ==============================================================================
+# Goal:
+#   - Reduce very large PDFs (e.g., 200MB) down to something closer to ~10MB
+#
+# Important notes:
+#   - There are TWO main strategies here:
+#       1) "Rebuild PDF from images" (MOST aggressive size reduction)
+#       2) "Optimize existing PDF" (Ghostscript / OCRmyPDF; may be limited)
+#
+#   - Keep your PDF name simple (avoid special characters):
+#       input.pdf
+#
+# How to use:
+#   - Put this file in the same folder as input.pdf
+#   - Run commands manually as needed (they’re not in a single automated script)
+# ==============================================================================
+
+
+# ==============================================================================
+# STRATEGY A (MOST EFFECTIVE): Rasterize → Rebuild PDF (Huge shrink)
+# ==============================================================================
+# This is the "nuclear option" that usually gives the biggest reduction.
+# It converts every PDF page into a JPEG image at a chosen DPI, then rebuilds
+# a new PDF from those JPGs.
+#
+# Pros:
+#   - Massive size reduction
+# Cons:
+#   - Text may not be selectable unless you OCR again afterward
+#   - Quality depends on DPI (110 = good balance; 90 = smaller; 72 = tiny/rough)
+# ==============================================================================
+
+# Create output folder for the JPG page images
+mkdir -p out_jpg
+
+# Convert PDF → JPG pages using Poppler (110 DPI, grayscale, JPEG)
+# -r 110   : resolution (DPI) — lower = smaller file
+# -gray    : grayscale output (smaller than color)
+# -jpeg    : JPEG output (good compression)
+docker run --rm -v "$PWD":/app -w /app minidocks/poppler \
+  pdftoppm -r 110 -gray -jpeg input.pdf out_jpg/page
+
+# Rebuild a single PDF from the generated JPG pages using img2pdf
+# Output will be: compressed.pdf
+docker run --rm -v "$PWD":/app -w /app minidocks/img2pdf \
+  -o compressed.pdf out_jpg/page-*.jpg
+
+
+# ==============================================================================
+# OPTIONAL (After Strategy A): Add searchable text back with OCR
+# ==============================================================================
+# This keeps the smaller "compressed.pdf" created above, and adds an OCR text layer.
+#
+# Pros:
+#   - Searchable / selectable text
+# Cons:
+#   - File size may increase slightly (usually worth it)
+# ==============================================================================
+
+#optional
+docker run --rm -v "$PWD":/work -w /work jbarlow83/ocrmypdf \
+  --optimize 3 --jpeg-quality 40 \
+  compressed.pdf final_searchable.pdf
+
+
+# ==============================================================================
+# STRATEGY B: Ghostscript "force downsampling" (May or may not help much)
+# ==============================================================================
+# This tries to reduce size by downsampling images INSIDE the existing PDF.
+# Great when it works — but if your PDF is already image-compressed in a stubborn
+# format, it may not shrink much.
+#
+# You have multiple "strength levels" below:
+#   - 150 DPI  => smaller, decent quality
+#   - 100 DPI  => smaller, more quality loss
+# ==============================================================================
+
+# Ghostscript forced downsampling (~150 DPI target) — "good balance"
+# Output: small.pdf
+docker run --rm -v "$PWD":/work -w /work geoffh1977/ghostscript \
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+  -dDownsampleColorImages=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=150 \
+  -dDownsampleGrayImages=true  -dGrayImageDownsampleType=/Bicubic  -dGrayImageResolution=150 \
+  -dDownsampleMonoImages=true  -dMonoImageDownsampleType=/Subsample -dMonoImageResolution=200 \
+  -dDetectDuplicateImages=true -dRemoveUnusedResources=true -dCompressFonts=true -dSubsetFonts=true \
+  -dNOPAUSE -dQUIET -dBATCH \
+  -sOutputFile=small.pdf input.pdf
+
+# Ghostscript forced downsampling (~100 DPI target) — "more aggressive / smaller"
+# Output: tiny.pdf
+docker run --rm -v "$PWD":/work -w /work geoffh1977/ghostscript \
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+  -dDownsampleColorImages=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=100 \
+  -dDownsampleGrayImages=true  -dGrayImageDownsampleType=/Bicubic  -dGrayImageResolution=100 \
+  -dDownsampleMonoImages=true  -dMonoImageDownsampleType=/Subsample -dMonoImageResolution=150 \
+  -dDetectDuplicateImages=true -dRemoveUnusedResources=true -dCompressFonts=true -dSubsetFonts=true \
+  -dNOPAUSE -dQUIET -dBATCH \
+  -sOutputFile=tiny.pdf input.pdf
+
+
+# ==============================================================================
+# STRATEGY C: Ghostscript preset profiles (Quick + simple)
+# ==============================================================================
+# These presets are easier but less controllable than forced downsampling.
+#
+# /ebook  : moderate compression, decent quality
+# /screen : strong compression, lower quality
+# ==============================================================================
+
+# Ghostscript preset profile (/screen) — strong compression
+# Output: small.pdf
+docker run --rm -v "$PWD":/work -w /work geoffh1977/ghostscript \
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+  -dPDFSETTINGS=/screen \
+  -dNOPAUSE -dQUIET -dBATCH \
+  -sOutputFile=small.pdf input.pdf
+
+
+# ==============================================================================
+# STRATEGY D: OCRmyPDF compression-only pass (May help, may be limited)
+# ==============================================================================
+# OCRmyPDF is best for OCR, not necessarily the most aggressive compressor.
+# It can optimize images a bit and make the PDF searchable.
+# ==============================================================================
+
+# OCRmyPDF pass (skip-text prevents re-OCR if text already exists)
+# Output: output.pdf
+docker run --rm -v "$PWD":/work -w /work jbarlow83/ocrmypdf \
+  --skip-text --optimize 3 --jpeg-quality 60 \
+  input.pdf output.pdf
+
+
+# ==============================================================================
+# STRATEGY E: Ghostscript preset profile (/ebook)
+# ==============================================================================
+# Often a decent compromise between /printer and /screen.
+# ==============================================================================
+
+# Ghostscript preset (/ebook) — balanced compression
+# Output: output.pdf
+docker run --rm -v "$PWD":/work -w /work geoffh1977/ghostscript \
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+  -dPDFSETTINGS=/ebook \
+  -dNOPAUSE -dQUIET -dBATCH \
+  -sOutputFile=output.pdf input.pdf
+
+
+# ==============================================================================
+# STRATEGY F: Ghostscript preset profile (/screen) again (alternate output name)
+# ==============================================================================
+# Same idea as the earlier /screen command, just writing to output.pdf.
+# ==============================================================================
+
+# Ghostscript preset (/screen) — stronger compression / lower quality
+# Output: output.pdf
+docker run --rm -v "$PWD":/work -w /work geoffh1977/ghostscript \
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+  -dPDFSETTINGS=/screen \
+  -dNOPAUSE -dQUIET -dBATCH \
+  -sOutputFile=output.pdf input.pdf
+
+
+# ==============================================================================
+# STRATEGY G: Local (non-Docker) Ghostscript command
+# ==============================================================================
+# Same Ghostscript /ebook preset, but calling ghostscript directly from your system.
+# Useful if you installed gs locally instead of using Docker.
+# ==============================================================================
+
+/usr/bin/ghostscript -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 \
+-dPDFSETTINGS=/ebook \
+-dNOPAUSE -dQUIET -dBATCH \
+-sOutputFile=compressed.pdf input.pdf
+
+
+# ==============================================================================
+# BONUS: OCRmyPDFonWEB (Streamlit Web UI) - Docker Compose snippet
+# ==============================================================================
+# This section is a docker-compose service definition for a web interface.
+# You would paste this into your docker-compose.yml.
+#
+# Pros:
+#   - Convenient browser UI for uploading PDFs + processing
+# Cons:
+#   - Not as scriptable as CLI
+#   - You must ensure Traefik upload limits allow large PDFs (200MB+)
+# ==============================================================================
+
+########################################################################
+# OCRmyPDFonWEB  – Web UI for OCRmyPDF (Streamlit)
+########################################################################
+ocrmypdfonweb:
+  # Web UI image that wraps OCRmyPDF in a Streamlit app
+  image: razemio/ocrmypdfonweb:latest
+  container_name: ocrmypdfonweb
+  restart: unless-stopped
+
+  environment:
+    # Timezone for container logs / UI behavior (if needed)
+    TZ: $TIMEZONE
+
+  networks:
+    # Traefik reverse-proxy network (internal routing)
+    proxy_ocrmypdf:
+      ipv4_address: $OCRMYPDF_PROXY_IP
+    # (optional) homarr integration network
+    homarr_ocrmypdf_net:
+      ipv4_address: $OCRMYPDF_HOMARR_IP
+
+  # Expose only internally (Traefik routes to it)
+  expose:
+    - 8501
+
+  volumes:
+    # Keep container time consistent with host
+    - /etc/localtime:/etc/localtime:ro
+
+  labels:
+    # Watchtower auto-update (optional)
+    - com.centurylinklabs.watchtower.enable=true
+
+    # Enable Traefik routing
+    - traefik.enable=true
+    - traefik.docker.network=proxy_ocrmypdf
+
+    ########################################################################
+    # (optional but recommended) allow large uploads (200MB+)
+    ########################################################################
+    # Max upload body size in bytes (500MB here)
+    - traefik.http.middlewares.ocrmypdf_upload.buffering.maxRequestBodyBytes=500000000
+    # Memory buffering threshold (20MB here)
+    - traefik.http.middlewares.ocrmypdf_upload.buffering.memRequestBodyBytes=20000000
+
+    ########################################################################
+    # 1) INTERNAL IP ROUTER (self-signed)
+    ########################################################################
+    - traefik.http.routers.ocrmypdf_internal.rule=Host(`$OCRMYPDF_LOCAL_DOMAIN`)
+    - traefik.http.routers.ocrmypdf_internal.entrypoints=https-local
+    - traefik.http.routers.ocrmypdf_internal.tls=true
+    - traefik.http.routers.ocrmypdf_internal.middlewares=ocrmypdf_upload,secured
+    - traefik.http.routers.ocrmypdf_internal.service=ocrmypdf_service
+
+    - traefik.http.routers.ocrmypdf_app.rule=Host(`$OCRMYPDF_APP_DOMAIN`)
+    - traefik.http.routers.ocrmypdf_app.entrypoints=https-local
+    - traefik.http.routers.ocrmypdf_app.tls=true
+    - traefik.http.routers.ocrmypdf_app.middlewares=ocrmypdf_upload,secured
+    - traefik.http.routers.ocrmypdf_app.service=ocrmypdf_service
+
+    ########################################################################
+    # 2) EXTERNAL ACCESS (domain → let's encrypt)
+    ########################################################################
+    - traefik.http.routers.ocrmypdf.rule=Host(`$OCRMYPDF_DOMAIN`)
+    - traefik.http.routers.ocrmypdf.entrypoints=https
+    - traefik.http.routers.ocrmypdf.tls=true
+    - traefik.http.routers.ocrmypdf.middlewares=ocrmypdf_upload,secured
+    - traefik.http.routers.ocrmypdf.service=ocrmypdf_service
+
+    ########################################################################
+    # Service port (Streamlit default)
+    ########################################################################
+    - traefik.http.services.ocrmypdf_service.loadbalancer.server.port=8501

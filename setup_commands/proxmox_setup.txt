@@ -1,0 +1,13 @@
+sudo apt-get install -y proxmox-auto-install-assistant
+diskutil list
+diskutil unmountDisk force /dev/disk2
+sudo dd if=/Users/ahmedaaali/Documents/proxmox/proxmox-ve_9.1-1-auto-from-iso.iso of=/dev/rdisk2 bs=1m status=progress
+diskutil eject /dev/disk2
+
+#lsb_release -cs
+echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" | sudo tee /etc/apt/sources.list.d/pve-install-repo.list
+wget https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg
+sudo install -o root -g root -m 644 proxmox-release-bookworm.gpg /etc/apt/trusted.gpg.d/
+sudo apt install -y proxmox-auto-install-assistant
+proxmox-auto-install-assistant validate-answer answers.toml
+proxmox-auto-install-assistant prepare-iso proxmox-ve_9.1-1.iso --fetch-from iso --answer-file answers.toml
