@@ -3,7 +3,10 @@ git config --global user.name "Ahmed Ali"
 git config --global user.email "ahmedaali2025@gmail.com"
 git config --list
 ssh-keygen -t ed25519 -C "ahmedaali2025@gmail.com"
-ssh-keygen -t ed25519 -C "ahmedaali2025@gmail.com" -f .ssh/id_ed25519_work
+ssh-keygen -t ed25519 -C "ahmedaali2025@gmail.com" -f ~/.ssh/id_ed25519_work
+ssh-keygen -t ed25519 -C "ahmedaali2025@gmail.com" -f ~/.ssh/id_ed25519_gitlab
+ssh-keygen -t ed25519 -C "ahmedaali2025@gmail.com" -f ~/.ssh/id_ed25519_forgejo
+ssh-keygen -t ed25519 -C "gitlab-ansible" -f ~/.ssh/id_ed25519_gitlab_ansible
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 #copy ssh_key
@@ -19,7 +22,7 @@ Host github.com
   IdentityFile ~/.ssh/id_ed25519
 
 # Personal account
-Host github-work
+Host github.com
   HostName github.com
   User git
   IdentityFile ~/.ssh/id_ed25519_work
