@@ -1,4 +1,4 @@
-# Recent settings file for Wireshark 4.4.1.
+# Recent settings file for Wireshark 4.6.2.
 #
 # This file is regenerated each time Wireshark is quit
 # and when changing configuration profile.
@@ -95,11 +95,11 @@ gui.show_bytes_show: ASCII
 
 # Main window upper (or leftmost) pane size.
 # Decimal number.
-gui.geometry_main_upper_pane: 264
+gui.geometry_main_upper_pane: 389
 
 # Main window middle pane size.
 # Decimal number.
-gui.geometry_main_lower_pane: 316
+gui.geometry_main_lower_pane: 686
 
 # Main window master splitter state.
 # Hex byte string.
@@ -154,3 +154,14 @@ gui.additional_toolbar_show:
 # Interface Toolbars show.
 # List of interface toolbars to show.
 gui.interface_toolbar_show: 
+
+# TCP Stream Graphs Moving Average Window Size.
+gui.tsd_ma_window_size: 1
+
+# TCP Stream Graphs Dialog Throughput show (hide).
+# true or false (case-insensitive).
+gui.tsd_throughput_show: true
+
+# TCP Stream Graphs Dialog Goodput show (hide).
+# true or false (case-insensitive).
+gui.tsd_goodput_show: false

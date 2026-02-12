@@ -29,8 +29,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   #fzf
   eval "$(fzf --zsh)"
 
-  alias wol="wakeonlan -i 192.168.0.113 -p 10 d8:43:ae:c0:a3:3b"
-  alias dol="ssh -T -p 2002 ahmed@7amada.lol 'cmd.exe /C 'rundll32.exe powrprof.dll,SetSuspendState Sleep''"
+  alias wol="wakeonlan -i pc.lol -p 10 d8:43:ae:c0:a3:3b"
+  alias dol="ssh -T -p 2002 ahmed@pc.lol 'cmd.exe /C 'rundll32.exe powrprof.dll,SetSuspendState Sleep''"
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   if [[ -f /etc/os-release ]]; then
@@ -166,6 +166,7 @@ bindkey "˙" backward-word
 
 
 #aliases:
+alias fdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 alias python="python3"
 alias py="python3"
 alias pyv="python3 --version"
