@@ -32,7 +32,7 @@ end
 -- Apply the basic configuration settings
 
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
-config.font_size = 16
+config.font_size = 14
 
 config.enable_tab_bar = false
 
